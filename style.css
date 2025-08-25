@@ -180,7 +180,22 @@ header ul a:hover{
 
 /* Gradient Animation */
 .gradient{
-    background: linear-gradient(to right,#00aaa7, #7e42a7, #6600c5, #6070fd,#2a46ff, #0099ff, #008ead);
+    background: linear-gradient(to right,#00aaa7, #42a7a7, #0097c5, #60c9fd,#2aaaff, #0080ff, #008ead);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animate-gradient 2.5s linear infinite;
+}
+@keyframes animate-gradient {
+    to{
+        background-position: 200%;
+    }
+}
+
+
+.gradient2{
+    background: linear-gradient(to right, #00c9ff, #92fe9d, #00d4ff, #0099f7, #3a7bd5);
     background-size: 200%;
     background-clip: text;
     -webkit-background-clip: text;
@@ -282,10 +297,10 @@ header ul a:hover{
     align-items:flex-start;
     justify-content: center;
     position: relative;
-    width: auto;
+    width: 300px;
     height: 40vh;
     overflow: hidden;
-    border: 1px solid gray;
+    border: 3px solid gray;
     background-color: #080020b7;
     border-radius: 20px;
     transition: 0.5s;
