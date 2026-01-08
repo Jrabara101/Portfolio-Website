@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Johnrick Rabara | Portfolio</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -33,14 +34,18 @@
     </div>
   </header>
 
-  <section id="about" class="intro flex flex-row items-start text-left justify-between gap-12 max-w-[1000px] mx-auto py-12">
+  <section id="about" class="intro flex flex-row items-start text-left justify-between gap-12 max-w-[1000px] mx-auto py-12 animate-on-scroll">
     <div class="intro-text flex flex-col justify-center flex-2 bg-[#17315a] rounded-xl p-10 mr-5 shadow-lg text-[#cfe3ff] items-center text-center min-w-[340px] max-w-[420px]">
       <p class="hello-gradient text-6xl md:text-7xl mt-0 mb-4 font-bold bg-gradient-to-r from-green-400 via-green-300 to-green-200 bg-clip-text text-transparent">Hello!</p>
       <p>
-        I'm an aspiring developer with a passion for learning and building great digital
-        experiences. Welcome to my portfolio! Graduate of Bachelor of Science in Computer Engineering at Lyceum of Alabang. I have a strong foundation in web development, particularly in front-end technologies like HTML, CSS, and JavaScript.
-        I also learned to use React as my frontend framework and Bootstrap and Tailwind for CSS frameworks. 
-        I am also proficient in Python and PHP for back-end development. My goal is to create user-friendly and visually appealing web applications that solve real-world problems.
+        I'm a passionate full-stack web developer dedicated to crafting exceptional digital experiences. 
+        A graduate of Bachelor of Science in Computer Engineering from Lyceum of Alabang, I specialize in 
+        building modern, responsive web applications using cutting-edge technologies. 
+        My expertise spans front-end development with React.js, TypeScript, HTML, CSS, and Tailwind CSS, 
+        as well as back-end development with Laravel, PHP, Python, Ruby on Rails, and .NET Framework. 
+        Currently working as a Web Developer, I focus on creating scalable, user-friendly applications 
+        that deliver both functionality and aesthetic appeal. I'm committed to continuous learning and 
+        applying best practices to solve real-world challenges through innovative web solutions.
       </p>
     </div>
     <div class="intro-img-box w-[300px] h-[300px] flex items-center justify-center rounded-xl overflow-hidden bg-[#17315a] shadow-lg mt-2">
@@ -55,7 +60,7 @@
     </div>
   </section>
 
-  <section id="skills" class="max-w-[1000px] mx-auto py-12">
+  <section id="skills" class="max-w-[1000px] mx-auto py-12 animate-on-scroll">
     <h2 class="carousel-title text-center text-4xl font-bold mb-12 text-[#cfe3ff]">My Tech Stacks</h2>
     <div class="skills grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 text-center">
       <div>
@@ -103,10 +108,6 @@
         <p>C Programming</p>
       </div>
       <div>
-        <img src="icons/php.png" alt="Typescript" class="w-12 h-12 mx-auto" />
-        <p>PHP</p>
-      </div>
-      <div>
         <img src="icons/laravel.png" alt="Typescript" class="w-12 h-12 mx-auto" />
         <p>Laravel</p>
       </div>
@@ -120,7 +121,7 @@
       </a>
     </div>
     <div class="flex justify-center mt-8">
-      <a href="CV - Rabara.pdf" class="resume-btn inline-flex items-center bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold text-lg px-7 py-3 rounded-full shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition" download>
+      <a href="CV - RABARA.pdf" class="resume-btn inline-flex items-center bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold text-lg px-7 py-3 rounded-full shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition" download>
         <span>Download My CV</span>
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:8px;" viewBox="0 0 24 24">
           <path d="M12 5v14M19 12l-7 7-7-7"/>
@@ -129,8 +130,8 @@
     </div>
   </section>
 
-  <section id="work" class="work max-w-[1000px] mx-auto py-12">
-    <h2 class="text-center text-4xl font-bold mb-12 text-[#cfe3ff]">Work Experience and Trainings Attended</h2>
+  <section id="work" class="work max-w-[1000px] mx-auto py-12 animate-on-scroll">
+    <h2 class="carousel-title text-center text-4xl font-bold mb-12 text-[#cfe3ff]">Work Experience and Trainings Attended</h2>
     <div class="work-experience-cards grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center items-start">
       <div class="work-card bg-[#17315a] bg-opacity-95 rounded-3xl shadow-2xl p-10 max-w-[370px] w-full flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-2xl">
         <div class="work-card-img w-28 h-28 mb-6 rounded-full overflow-hidden border-4 border-[#64ffda] bg-white flex items-center justify-center p-2">
@@ -250,7 +251,7 @@
     </div>
   </section>
 
-  <section id="projects" class="carousel-section max-w-[1200px] mx-auto mt-16 px-6 py-16 relative">
+  <section id="projects" class="carousel-section max-w-[1200px] mx-auto mt-16 px-6 py-16 relative animate-on-scroll">
   <h2 class="carousel-title text-center text-4xl font-bold mb-16 text-[#cfe3ff]">Projects</h2>
 
   <div class="carousel-controls absolute top-0 right-0 flex gap-3">
@@ -434,7 +435,7 @@
 </section>
 
 
-  <section id="contact" class="contact max-w-[1000px] mx-auto py-12">
+  <section id="contact" class="contact max-w-[1000px] mx-auto py-12 animate-on-scroll">
     <h2 class="carousel-title text-center text-4xl font-bold mb-12 text-[#cfe3ff]">Contacts</h2>
     <div class="d-flex flex flex-col md:flex-row justify-center items-center gap-8 w-full mx-auto">
       <button class="contact-icon-btn bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[220px] max-w-[270px] min-h-[220px] flex flex-col items-center justify-center overflow-hidden transition-all duration-300 p-8 text-center border-none m-6 cursor-pointer hover:shadow-2xl hover:-translate-y-2 hover:scale-105 hover:bg-[#298dff] hover:text-white" onclick="window.location.href='mailto:jrabara101@gmail.com'">
