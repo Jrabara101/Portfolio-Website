@@ -76,6 +76,12 @@
       canvas.height = window.innerHeight;
     });
 
+    // Mouse Spotlight Glow Effect
+    window.addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+
     // Header Scroll Effect
     const header = document.querySelector('.main-header');
     window.addEventListener('scroll', () => {
@@ -202,34 +208,41 @@
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
     const carouselContainer = document.querySelector('.carousel-container');
+    let activeCards = [...cards];
     let currentIndex = 0;
-    const cardsPerView = 3;
+    let cardsPerView = 3;
     let autoSwipeInterval;
     const autoSwipeDelay = 3000; // 3 seconds between auto-swipes
 
+    // Calculate cards per view dynamically based on screen width
+    function updateCardsPerView() {
+      if (window.innerWidth <= 640) {
+        cardsPerView = 1;
+      } else if (window.innerWidth <= 1024) {
+        cardsPerView = 2;
+      } else {
+        cardsPerView = 3;
+      }
+    }
+    updateCardsPerView();
+
     // Enhanced carousel with smooth transitions
     function updateCarousel() {
-      if (cards.length === 0) return;
-      const cardWidth = cards[0].offsetWidth + 32;
+      if (activeCards.length === 0) return;
+      const cardWidth = activeCards[0].offsetWidth + 32;
       track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
       track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
     }
 
     // Auto-swipe function that loops infinitely
     function autoSwipe() {
-      if (cards.length === 0) return;
-      
-      // Calculate max index based on visible cards
-      const maxIndex = Math.max(0, cards.length - cardsPerView);
-      
+      if (activeCards.length === 0) return;
+      const maxIndex = Math.max(0, activeCards.length - cardsPerView);
       if (currentIndex < maxIndex) {
-        // Move to next
         currentIndex++;
       } else {
-        // Loop back to start
         currentIndex = 0;
       }
-      
       updateCarousel();
     }
 
@@ -265,8 +278,7 @@
       if (currentIndex > 0) {
         currentIndex--;
       } else {
-        // Loop to end
-        currentIndex = Math.max(0, cards.length - cardsPerView);
+        currentIndex = Math.max(0, activeCards.length - cardsPerView);
       }
       updateCarousel();
       startAutoSwipe();
@@ -274,32 +286,146 @@
 
     nextBtn.addEventListener('click', () => {
       stopAutoSwipe();
-      const maxIndex = Math.max(0, cards.length - cardsPerView);
+      const maxIndex = Math.max(0, activeCards.length - cardsPerView);
       if (currentIndex < maxIndex) {
         currentIndex++;
       } else {
-        // Loop to start
         currentIndex = 0;
       }
       updateCarousel();
       startAutoSwipe();
     });
 
+    // Filter Logic for Projects
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    if (filterTabs.length > 0) {
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          stopAutoSwipe();
+          
+          // Remove active styles from tabs
+          filterTabs.forEach(t => {
+            t.classList.remove('bg-gradient-to-r', 'from-[#64ffda]', 'to-[#298dff]', 'text-[#0a192f]');
+            t.classList.add('bg-white/10', 'text-white');
+          });
+          
+          // Add active styles to clicked tab
+          tab.classList.add('bg-gradient-to-r', 'from-[#64ffda]', 'to-[#298dff]', 'text-[#0a192f]');
+          tab.classList.remove('bg-white/10', 'text-white');
+          
+          const filter = tab.getAttribute('data-filter');
+          
+          // Filter cards visual display
+          cards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (filter === 'all' || category === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+          
+          // Re-populate activeCards
+          activeCards = cards.filter(card => card.style.display !== 'none');
+          currentIndex = 0;
+          
+          // Reset track transform instantly
+          track.style.transition = 'none';
+          track.style.transform = 'translateX(0px)';
+          
+          setTimeout(() => {
+            updateCarousel();
+            startAutoSwipe();
+          }, 50);
+        });
+      });
+    }
+
     window.addEventListener('resize', () => {
+      updateCardsPerView();
       updateCarousel();
     });
     
     // Initialize carousel after DOM is ready
     if (cards.length > 0) {
       updateCarousel();
-      // Start auto-swipe after a short delay
       setTimeout(() => {
         startAutoSwipe();
       }, 1000);
     }
 
-    function openProject(url) {
-      window.open(url, '_blank');
+    // Project Detail Modal Code
+    const projectModal = document.getElementById('projectModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalTech = document.getElementById('modalTech');
+    const modalSourceBtn = document.getElementById('modalSourceBtn');
+    const modalLiveBtn = document.getElementById('modalLiveBtn');
+
+    window.openProjectModal = function(button) {
+      const card = button.closest('.carousel-card');
+      if (!card || !projectModal) return;
+
+      stopAutoSwipe();
+
+      // Extract details
+      const title = card.querySelector('h3').textContent;
+      const category = card.getAttribute('data-category');
+      const tech = card.getAttribute('data-tech') || '';
+      const source = card.getAttribute('data-source') || '#';
+      const live = card.getAttribute('data-live') || '#';
+      const description = card.getAttribute('data-description') || '';
+      const imgSrc = card.querySelector('img').getAttribute('src');
+
+      // Populate Modal Fields
+      modalImage.setAttribute('src', imgSrc);
+      modalImage.setAttribute('alt', title);
+      modalTitle.textContent = title;
+      modalCategory.textContent = category === 'games' ? 'Interactive Game' : (category === 'fullstack' ? 'Full Stack Application' : 'Front End Design');
+      modalDescription.textContent = description;
+      modalSourceBtn.setAttribute('href', source);
+      modalLiveBtn.setAttribute('href', live);
+
+      // Populate Tech Badges
+      modalTech.innerHTML = '';
+      if (tech) {
+        tech.split(',').forEach(item => {
+          const badge = document.createElement('span');
+          badge.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white';
+          badge.textContent = item.trim();
+          modalTech.appendChild(badge);
+        });
+      }
+
+      // Display Modal with Smooth Fade-in
+      projectModal.style.display = 'flex';
+      setTimeout(() => {
+        projectModal.classList.remove('opacity-0');
+        projectModal.classList.add('opacity-100');
+        projectModal.querySelector('.glass-card').style.transform = 'scale(1)';
+      }, 10);
+    }
+
+    if (closeModal && projectModal) {
+      closeModal.addEventListener('click', () => {
+        projectModal.classList.remove('opacity-100');
+        projectModal.classList.add('opacity-0');
+        projectModal.querySelector('.glass-card').style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          projectModal.style.display = 'none';
+          startAutoSwipe();
+        }, 300);
+      });
+
+      // Close modal on background click
+      projectModal.addEventListener('click', (e) => {
+        if (e.target === projectModal) {
+          closeModal.click();
+        }
+      });
     }
 
     // Intersection Observer for Scroll Animations
@@ -326,6 +452,34 @@
               setTimeout(() => {
                 item.classList.add('animated');
               }, index * 100);
+            });
+          }
+          
+          // Stagger animation for services
+          if (entry.target.id === 'services') {
+            const serviceCards = entry.target.querySelectorAll('#services .glass-card');
+            serviceCards.forEach((card, index) => {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(30px)';
+              card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, index * 150);
+            });
+          }
+
+          // Stagger animation for testimonials
+          if (entry.target.id === 'testimonials') {
+            const testimonialCards = entry.target.querySelectorAll('#testimonials .glass-card');
+            testimonialCards.forEach((card, index) => {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(30px)';
+              card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, index * 150);
             });
           }
           
@@ -381,13 +535,13 @@
         if (currentIndex > 0) {
           currentIndex--;
         } else {
-          currentIndex = Math.max(0, cards.length - cardsPerView);
+          currentIndex = Math.max(0, activeCards.length - cardsPerView);
         }
         updateCarousel();
         startAutoSwipe();
       } else if (e.key === 'ArrowRight') {
         stopAutoSwipe();
-        const maxIndex = Math.max(0, cards.length - cardsPerView);
+        const maxIndex = Math.max(0, activeCards.length - cardsPerView);
         if (currentIndex < maxIndex) {
           currentIndex++;
         } else {
@@ -413,7 +567,7 @@
     
     function handleSwipe() {
       stopAutoSwipe();
-      const maxIndex = Math.max(0, cards.length - cardsPerView);
+      const maxIndex = Math.max(0, activeCards.length - cardsPerView);
       
       if (touchEndX < touchStartX - 50) {
         // Swipe left - go to next
@@ -436,3 +590,89 @@
       
       startAutoSwipe();
     }
+
+    // Contact Form Validation and Submission Handlers
+    window.handleContactSubmit = function(event) {
+      event.preventDefault();
+
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const messageError = document.getElementById('messageError');
+
+      let isValid = true;
+
+      // Validate Name
+      if (!nameInput.value.trim()) {
+        nameError.classList.remove('hidden');
+        nameInput.style.borderColor = '#fc8181'; // red-400
+        isValid = false;
+      } else {
+        nameError.classList.add('hidden');
+        nameInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      }
+
+      // Validate Email
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
+        emailError.classList.remove('hidden');
+        emailInput.style.borderColor = '#fc8181'; // red-400
+        isValid = false;
+      } else {
+        emailError.classList.add('hidden');
+        emailInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      }
+
+      // Validate Message
+      if (!messageInput.value.trim()) {
+        messageError.classList.remove('hidden');
+        messageInput.style.borderColor = '#fc8181'; // red-400
+        isValid = false;
+      } else {
+        messageError.classList.add('hidden');
+        messageInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      }
+
+      if (isValid) {
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        // Simulate secure async submission
+        setTimeout(() => {
+          const successState = document.getElementById('successState');
+          if (successState) {
+            successState.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+            successState.classList.add('opacity-100', 'translate-y-0');
+            successState.style.pointerEvents = 'auto';
+          }
+          
+          // Clear inputs
+          nameInput.value = '';
+          emailInput.value = '';
+          messageInput.value = '';
+
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }, 1200);
+      }
+    };
+
+    window.resetContactForm = function() {
+      const successState = document.getElementById('successState');
+      if (successState) {
+        successState.classList.remove('opacity-100', 'translate-y-0');
+        successState.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+        successState.style.pointerEvents = 'none';
+      }
+
+      // Restore borders
+      document.getElementById('name').style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      document.getElementById('email').style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      document.getElementById('message').style.borderColor = 'rgba(255, 255, 255, 0.1)';
+    };

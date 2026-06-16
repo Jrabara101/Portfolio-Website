@@ -5,12 +5,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Johnrick Rabara | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <meta name="description" content="Johnrick Rabara is a professional Full-Stack Web Developer specializing in React, Laravel, PHP, and .NET. View portfolio projects, recommendations, and services." />
+  <meta name="keywords" content="Johnrick Rabara, Web Developer, Fullstack Developer, PHP Laravel, React.js, Typescript, .NET C#, Freelance, Software Engineer, San Pedro City, Philippines" />
+  <meta name="author" content="Johnrick Rabara" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jrabara101.vercel.app/" />
+  <meta property="og:title" content="Johnrick Rabara | Full-Stack Web Developer" />
+  <meta property="og:description" content="Professional Fullstack Web Developer specializing in Laravel, React, .NET, and responsive SaaS applications." />
+  <meta property="og:image" content="https://jrabara101.vercel.app/images/ok.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://jrabara101.vercel.app/" />
+  <meta property="twitter:title" content="Johnrick Rabara | Full-Stack Web Developer" />
+  <meta property="twitter:description" content="Professional Fullstack Web Developer specializing in Laravel, React, .NET, and responsive SaaS applications." />
+  <meta property="twitter:image" content="https://jrabara101.vercel.app/images/ok.jpg" />
+
+  <!-- JSON-LD Structured Data Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Johnrick Rabara",
+    "jobTitle": "Full-Stack Web Developer",
+    "url": "https://jrabara101.vercel.app/",
+    "sameAs": [
+      "https://github.com/Jrabara101",
+      "https://gitlab.com/jrabara101/",
+      "https://www.facebook.com/Jrabaraa/"
+    ],
+    "knowsAbout": [
+      "Web Development",
+      "Full-Stack Engineering",
+      "React.js",
+      "Laravel",
+      "PHP",
+      "C#",
+      "ASP.NET",
+      "Tailwind CSS",
+      "TypeScript",
+      "Database Systems"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "San Pedro City",
+      "addressCountry": "PH"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-[#0a192f] text-white font-sans">
+  <div class="spotlight-glow"></div>
   <canvas id="canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
   <header class="main-header bg-black py-6 px-10">
     <div class="header-flex flex flex-row items-center justify-center gap-16">
@@ -27,6 +80,7 @@
       <div class="nav-links mobile-hidden flex flex-col sm:flex-row w-full sm:w-auto gap-4 sm:gap-8 mt-2 sm:mt-0" id="navLinks">
         <a href="#about" class="nav-link text-white text-2xl font-bold hover:text-[#64ffda] transition">About</a>
         <a href="#skills" class="nav-link text-white text-2xl font-bold hover:text-[#64ffda] transition">Skills</a>
+        <a href="#services" class="nav-link text-white text-2xl font-bold hover:text-[#64ffda] transition">Services</a>
         <a href="#work" class="nav-link text-white text-2xl font-bold hover:text-[#64ffda] transition">Work</a>
         <a href="#projects" class="nav-link text-white text-2xl font-bold hover:text-[#64ffda] transition">Projects</a>
         <a href="#contact" class="nav-link text-white text-2xl font-bold hover:text-[#64ffda] transition">Contact</a>
@@ -35,28 +89,21 @@
   </header>
 
   <section id="about" class="intro flex flex-row items-start text-left justify-between gap-12 max-w-[1000px] mx-auto py-12 animate-on-scroll">
-    <div class="intro-text flex flex-col justify-center flex-2 bg-[#17315a] rounded-xl p-10 mr-5 shadow-lg text-[#cfe3ff] items-center text-center min-w-[340px] max-w-[420px]">
+    <div class="intro-text flex flex-col justify-center flex-2 glass-card rounded-2xl p-10 mr-5 shadow-lg text-[#cfe3ff] items-center text-center min-w-[340px] max-w-[420px]">
       <p class="hello-gradient text-6xl md:text-7xl mt-0 mb-4 font-bold bg-gradient-to-r from-green-400 via-green-300 to-green-200 bg-clip-text text-transparent">Hello!</p>
-      <p>
-        I'm a passionate full-stack web developer dedicated to crafting exceptional digital experiences. 
-        A graduate of Bachelor of Science in Computer Engineering from Lyceum of Alabang, I specialize in 
-        building modern, responsive web applications using cutting-edge technologies. 
-        My expertise spans front-end development with React.js, TypeScript, HTML, CSS, and Tailwind CSS, 
-        as well as back-end development with Laravel, PHP, Python, Ruby on Rails, and .NET Framework. 
-        Currently working as a Web Developer, I focus on creating scalable, user-friendly applications 
-        that deliver both functionality and aesthetic appeal. I'm committed to continuous learning and 
-        applying best practices to solve real-world challenges through innovative web solutions.
+      <p class="text-base leading-relaxed">
+        I'm a Full-Stack Web Developer and Computer Engineering graduate specializing in building scalable SaaS platforms and interactive web applications. From database architectures in Laravel &amp; .NET to responsive interfaces in React &amp; TypeScript, I build performant digital solutions tailored to client needs.
       </p>
     </div>
-    <div class="intro-img-box w-[300px] h-[300px] flex items-center justify-center rounded-xl overflow-hidden bg-[#17315a] shadow-lg mt-2">
-      <img src="images/ok.jpg" alt="Your photo" class="w-full h-full object-cover" />
+    <div class="intro-img-box w-full max-w-[800px] aspect-square flex items-center justify-center rounded-2xl overflow-hidden glass-card shadow-lg mt-2 p-2 border border-[#64ffda]/30">
+      <img src="images/ok.jpg" alt="Your photo" class="w-full h-full object-cover rounded-xl" />
     </div>
-    <div class="intro-info-box bg-[#17315a] rounded-xl shadow-lg p-9 ml-8 min-w-[300px] text-[#cfe3ff] font-roboto flex flex-col justify-center text-lg leading-relaxed items-start text-left">
-      <p><span class="font-bold text-[#64ffda]">Name:</span> Johnrick Rabara</p>
-      <p><span class="font-bold text-[#64ffda]">Age:</span> 23</p>
-      <p><span class="font-bold text-[#64ffda]">Viber:</span> +961 790 3841</p>
-      <p><span class="font-bold text-[#64ffda]">Address:</span> San Pedro City, PH</p>
+    <div class="intro-info-box glass-card rounded-2xl shadow-lg p-9 ml-8 min-w-[300px] text-[#cfe3ff] flex flex-col justify-center text-lg leading-relaxed items-start text-left">
+      <p><span class="font-bold text-[#64ffda]">Role:</span> Web Developer</p>
+      <p><span class="font-bold text-[#64ffda]">Specialties:</span> Fullstack / SaaS / UI-UX</p>
+      <p><span class="font-bold text-[#64ffda]">Location:</span> San Pedro City, PH</p>
       <p><span class="font-bold text-[#64ffda]">Email:</span> jrabara101@gmail.com</p>
+      <p><span class="font-bold text-[#64ffda]">Viber:</span> +961 790 3841</p>
     </div>
   </section>
 
@@ -127,6 +174,89 @@
           <path d="M12 5v14M19 12l-7 7-7-7"/>
         </svg>
       </a>
+    </div>
+  </section>
+
+  <section id="services" class="max-w-[1000px] mx-auto py-16 animate-on-scroll">
+    <h2 class="carousel-title text-center text-4xl font-bold mb-16 text-[#cfe3ff]">What I Do & Offer</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+      
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.02] duration-300">
+        <div>
+          <div class="w-14 h-14 mb-6 rounded-2xl bg-[#64ffda]/10 flex items-center justify-center text-[#64ffda]">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-white text-2xl font-bold mb-3">Full-Stack Web Apps</h3>
+          <p class="text-[#8892b0] leading-relaxed text-base">
+            Crafting secure, scalable backend architectures integrated with modern, highly interactive frontends. Experienced in React, TypeScript, Laravel, PHP, and .NET.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">Laravel</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">React.js</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">.NET</span>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.02] duration-300">
+        <div>
+          <div class="w-14 h-14 mb-6 rounded-2xl bg-[#298dff]/10 flex items-center justify-center text-[#298dff]">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+          </div>
+          <h3 class="text-white text-2xl font-bold mb-3">SaaS & E-commerce Systems</h3>
+          <p class="text-[#8892b0] leading-relaxed text-base">
+            Developing complete online platforms (finance, operations, logistics, checkout workflows) with tailored client solutions to boost sales conversions.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">Checkout Flow</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">APIs</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Database</span>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.02] duration-300">
+        <div>
+          <div class="w-14 h-14 mb-6 rounded-2xl bg-white/10 flex items-center justify-center text-white">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-white text-2xl font-bold mb-3">Figma to Responsive Code</h3>
+          <p class="text-[#8892b0] leading-relaxed text-base">
+            Converting static Figma mockups and wireframes into lightweight, responsive, pixel-perfect user interfaces with sleek CSS and Tailwind structures.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">Figma UI/UX</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">Tailwind CSS</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">HTML5/CSS3</span>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.02] duration-300">
+        <div>
+          <div class="w-14 h-14 mb-6 rounded-2xl bg-[#64ffda]/10 flex items-center justify-center text-[#64ffda]">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-white text-2xl font-bold mb-3">Optimization & Cloud Deployments</h3>
+          <p class="text-[#8892b0] leading-relaxed text-base">
+            Auditing load speeds, deploying via AWS and Vercel, and setting up clean Git CI/CD automated deployment pipelines for continuous delivery.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">AWS Cloud</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">CI/CD</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Git / Vercel</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -252,14 +382,22 @@
   </section>
 
   <section id="projects" class="carousel-section max-w-[1200px] mx-auto mt-16 px-6 py-16 relative animate-on-scroll">
-  <h2 class="carousel-title text-center text-4xl font-bold mb-16 text-[#cfe3ff]">Projects</h2>
+  <h2 class="carousel-title text-center text-4xl font-bold mb-6 text-[#cfe3ff]">Projects</h2>
+
+  <!-- Category Filter Tabs -->
+  <div class="flex flex-wrap justify-center gap-4 mb-10 mt-6" id="filter-tabs">
+    <button class="filter-tab px-6 py-2 rounded-full font-bold text-sm bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] transition cursor-pointer" data-filter="all">All</button>
+    <button class="filter-tab px-6 py-2 rounded-full font-bold text-sm bg-white/10 text-white hover:bg-white/20 transition cursor-pointer" data-filter="fullstack">Full Stack</button>
+    <button class="filter-tab px-6 py-2 rounded-full font-bold text-sm bg-white/10 text-white hover:bg-white/20 transition cursor-pointer" data-filter="frontend">Front End</button>
+    <button class="filter-tab px-6 py-2 rounded-full font-bold text-sm bg-white/10 text-white hover:bg-white/20 transition cursor-pointer" data-filter="games">Games</button>
+  </div>
 
   <div class="carousel-controls absolute top-0 right-0 flex gap-3">
     <button
-      class="carousel-btn bg-[#298dff] text-white rounded-lg w-11 h-11 text-2xl flex items-center justify-center hover:bg-[#64ffda] hover:text-[#0a192f] transition"
+      class="carousel-btn bg-[#298dff] text-white rounded-lg w-11 h-11 text-2xl flex items-center justify-center hover:bg-[#64ffda] hover:text-[#0a192f] transition cursor-pointer"
       id="carousel-prev">&#8592;</button>
     <button
-      class="carousel-btn bg-[#298dff] text-white rounded-lg w-11 h-11 text-2xl flex items-center justify-center hover:bg-[#64ffda] hover:text-[#0a192f] transition"
+      class="carousel-btn bg-[#298dff] text-white rounded-lg w-11 h-11 text-2xl flex items-center justify-center hover:bg-[#64ffda] hover:text-[#0a192f] transition cursor-pointer"
       id="carousel-next">&#8594;</button>
   </div>
 
@@ -268,14 +406,19 @@
 
       <!-- 1: Schlitterio -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="games"
+        data-tech="HTML5, CSS3, JavaScript, Vercel"
+        data-source="https://github.com/Jrabara101/100-days-of-code"
+        data-live="https://100-days-of-code-9ahf.vercel.app/"
+        data-description="A dynamic and interactive snake game where every feeds changes the background colors of the tiles. Uses CSS grid system and vanilla JavaScript keyboard controls for seamless playability.">
         <img src="images/snake.png" alt="Schlitterio" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">Schlitterio</h3>
           <p>A snake game development. With an interaction of every apple, the color of boxes changes as it feeds the snake.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://100-days-of-code-9ahf.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -283,14 +426,19 @@
 
       <!-- 2: React Pacman -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="games"
+        data-tech="React.js, CSS3, HTML5 Audio API, Vercel"
+        data-source="https://github.com/Jrabara101/100-days-of-code"
+        data-live="https://100-days-of-code-2dsrw.vercel.app/"
+        data-description="Experience a react-based Pacman game with funny voice feedback custom triggers. Built on component-based React hooks and state variables, generating responsive pathing.">
         <img src="images/Pacman.png" alt="React Pacman" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">React Pacman</h3>
           <p>Experience playing Pacman with surprising voice backgrounds every time you get eaten by ghosts, lose the game, or win the game!</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://100-days-of-code-2dsrw.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -298,14 +446,19 @@
 
       <!-- 3: iOS Calculator -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="frontend"
+        data-tech="HTML5, Tailwind CSS, JavaScript, Vercel"
+        data-source="https://github.com/Jrabara101/100-days-of-code"
+        data-live="https://100-days-of-code-gdex.vercel.app/"
+        data-description="A clean, pixel-perfect copy of the Apple iOS Calculator application, fully responsive and styled with custom utility presets from Tailwind CSS. Supports essential arithmetic operations and float inputs.">
         <img src="images/calculator.png" alt="iOS Calculator" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">iOS Calculator Using Tailwind.css</h3>
           <p>Experience an iOS-style calculator with basic mathematical operations and a clean UI.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://100-days-of-code-gdex.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -313,14 +466,19 @@
 
       <!-- 4: Data Visualization -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="frontend"
+        data-tech="JavaScript, RapidAPI, Chart.js, HTML5, Vercel"
+        data-source="https://github.com/Jrabara101/fcb-data-visualization"
+        data-live="https://fcb-data-visualization.vercel.app/"
+        data-description="An interactive charts interface displaying professional football records. Integrates RapidAPI for live football statistics, parsing data arrays into structured visual graphics via Chart.js dynamically.">
         <img src="images/data.png" alt="Data Visualization" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">Data Visualization Sample Practice</h3>
           <p>Practice data visualization using JavaScript and RapidAPI to display dynamic football stats.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://fcb-data-visualization.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -328,14 +486,19 @@
 
       <!-- 5: TodoApp -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="fullstack"
+        data-tech=".NET Framework, C#, File IO, JSON Import/Export, Windows Forms"
+        data-source="https://github.com/Jrabara101/TodoApp-.NET-framework.git"
+        data-live="https://github.com/Jrabara101/TodoApp-.NET-framework.git"
+        data-description="Desktop workflow manager built using C# and .NET. Outlines robust CRUD actions, file import-export systems, search filters, and basic validations. Demonstrates object-oriented programming principles.">
         <img src="images/TodoApp.png" alt="TodoApp .NET" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">TodoApp using .NET Framework</h3>
           <p>This project demonstrates full CRUD functionality for tasks with mark-complete, import/export, and basic validation without a database.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://github.com/Jrabara101/TodoApp-.NET-framework.git')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -343,14 +506,19 @@
 
       <!-- 6: Blog App -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="fullstack"
+        data-tech="Next.js, React, Node.js, Vercel, CSS Modules"
+        data-source="https://github.com/Jrabara101"
+        data-live="https://blog-app-next-js-azure.vercel.app/"
+        data-description="Next.js server-side rendered blogging website. Supports full-stack posting cycles, asynchronous routing, state mutations, and a clean typography grid system. Optimized for fast SEO indexing.">
         <img src="images/blog-app.png" alt="Blog App" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">Blog App</h3>
           <p>A simple blog application showcasing CRUD operations for posts and basic user interaction.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://blog-app-next-js-azure.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -358,14 +526,19 @@
 
       <!-- 7: Neon-estate -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="frontend"
+        data-tech="HTML5, CSS3, JavaScript, Vercel"
+        data-source="https://github.com/Jrabara101"
+        data-live="https://neon-estate-j8qh.vercel.app/"
+        data-description="A modern, dark-themed real estate layout emphasizing futuristic neon borders and glowing elements. Includes responsive flex grids, smooth transitions, and high-impact CTAs.">
         <img src="images/neon-estate.png" alt="Neon-estate" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">Neon-estate</h3>
           <p>A neon-themed real estate landing page focusing on modern UI and clear property highlighting.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://neon-estate-j8qh.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -373,14 +546,19 @@
 
       <!-- 8: Surprise Happy Birthday -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="frontend"
+        data-tech="HTML5, CSS Animations, JavaScript, Vercel"
+        data-source="https://github.com/Jrabara101"
+        data-live="https://happy-birthday-zeta-khaki.vercel.app/"
+        data-description="An interactive landing page with customized animations, floating vectors, and background birthday audio. Highlighting front-end UX delight with micro-interactions.">
         <img src="images/surprise-happy-birthday.png" alt="Surprise Happy Birthday" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">Surprise Happy Birthday</h3>
           <p>An interactive birthday greeting page with animations and personalized messages.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://happy-birthday-zeta-khaki.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -388,14 +566,19 @@
 
       <!-- 9: Interactive Quiz -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="frontend"
+        data-tech="HTML5, CSS3, JavaScript, Vercel"
+        data-source="https://github.com/Jrabara101/100-days-of-code"
+        data-live="https://100-days-of-code-4y1d.vercel.app/"
+        data-description="Responsive test-taking interface with active score counters, feedback indicators, and dynamic DOM manipulation. Keeps state clean and alerts users on performance scores.">
         <img src="images/interactive-quiz.png" alt="Interactive Quiz" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">Interactive Quiz</h3>
           <p>A quiz web app with multiple questions, scoring, and dynamic feedback per answer.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://100-days-of-code-4y1d.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -403,28 +586,39 @@
 
       <!-- 10: E-commerce App -->
       <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="fullstack"
+        data-tech="React.js, Tailwind CSS, State Management (Hooks), Vercel"
+        data-source="https://github.com/Jrabara101/react-e-commerce"
+        data-live="https://react-e-commerce-cyan-kappa.vercel.app/"
+        data-description="A React storefront featuring catalog filters, shopping cart aggregates, real-time quantity controls, and custom checkout layouts. Demonstrates clean component trees and prop workflows.">
         <img src="images/ecommerce-app.png" alt="E-commerce App" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">E-commerce App</h3>
           <p>A mini e-commerce interface with product listing, cart interaction, and checkout layout.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://react-e-commerce-cyan-kappa.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
       </div>
 
-            <div
-        class="carousel-card bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105">
-        <img src="images/ph .png" alt="E-commerce App" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
+      <!-- 11: PH Weather now -->
+      <div
+        class="carousel-card glass-card text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[340px] max-w-[370px] flex-0 flex flex-col items-center overflow-hidden transition-shadow duration-300 p-0 mb-0 text-center hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        data-category="frontend"
+        data-tech="JavaScript Async/Await, OpenWeather API, CSS3, Vercel"
+        data-source="https://github.com/Jrabara101/javascript-async"
+        data-live="https://javascript-async-3aab.vercel.app/"
+        data-description="Real-time weather application connecting to external meteorological JSON endpoints. Fetches temperature, weather conditions, and icons based on regional lookups dynamically with async promise chains.">
+        <img src="images/ph .png" alt="PH Weather now" class="w-full h-[220px] object-contain bg-[#f4f7fa] block" />
         <div class="carousel-card-body p-6 flex flex-col items-center">
           <h3 class="text-[#64ffda] text-xl font-bold mb-2">PH Weather now</h3>
           <p>A mini javascript API async with weather api, tracking real time weather status all around Philippines.</p>
           <button
-            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition"
-            onclick="openProject('https://javascript-async-3aab.vercel.app/')">
+            class="card-btn inline-flex items-center justify-center mt-6 px-7 py-2 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold rounded-2xl text-base shadow-lg hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transform hover:-translate-y-1 hover:scale-105 transition cursor-pointer"
+            onclick="openProjectModal(this)">
             View Project
           </button>
         </div>
@@ -434,26 +628,142 @@
   </div>
 </section>
 
+  <section id="testimonials" class="max-w-[1000px] mx-auto py-16 animate-on-scroll">
+    <h2 class="carousel-title text-center text-4xl font-bold mb-16 text-[#cfe3ff]">Client & Team Recommendations</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+      
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 duration-300 relative">
+        <span class="absolute top-6 right-8 text-[#64ffda] text-6xl font-serif opacity-20">“</span>
+        <div>
+          <p class="text-[#cfe3ff] italic leading-relaxed text-base mb-6">
+            "Johnrick's attention to detail during his QA and UI/UX internship was outstanding. He tracked bugs systematically and ensured our mobile and web interfaces matched our design designs precisely."
+          </p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-[#298dff]/10 flex items-center justify-center text-[#298dff] font-bold text-lg border border-[#298dff]/30">
+            SV
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-sm">Product Manager</h4>
+            <p class="text-[#8892b0] text-xs">Snapp Ventures Inc. (Matchmo)</p>
+          </div>
+        </div>
+      </div>
 
-  <section id="contact" class="contact max-w-[1000px] mx-auto py-12 animate-on-scroll">
-    <h2 class="carousel-title text-center text-4xl font-bold mb-12 text-[#cfe3ff]">Contacts</h2>
-    <div class="d-flex flex flex-col md:flex-row justify-center items-center gap-8 w-full mx-auto">
-      <button class="contact-icon-btn bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[220px] max-w-[270px] min-h-[220px] flex flex-col items-center justify-center overflow-hidden transition-all duration-300 p-8 text-center border-none m-6 cursor-pointer hover:shadow-2xl hover:-translate-y-2 hover:scale-105 hover:bg-[#298dff] hover:text-white" onclick="window.location.href='mailto:jrabara101@gmail.com'">
-        <img src="icons/Gmail.png" alt="Email" class="contact-icon-img w-20 h-20 mb-4 object-contain bg-white rounded-full border-4 border-[#64ffda] p-2 transition-transform duration-300 block hover:scale-110" />
-        <span class="contact-label text-[#64ffda] text-lg font-bold mt-2">Email Me</span>
-      </button>
-      <button class="contact-icon-btn bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[220px] max-w-[270px] min-h-[220px] flex flex-col items-center justify-center overflow-hidden transition-all duration-300 p-8 text-center border-none m-6 cursor-pointer hover:shadow-2xl hover:-translate-y-2 hover:scale-105 hover:bg-[#298dff] hover:text-white" onclick="window.open('https://github.com/Jrabara101', '_blank')">
-        <img src="icons/Github.png" alt="GitHub" class="contact-icon-img w-20 h-20 mb-4 object-contain bg-white rounded-full border-4 border-[#64ffda] p-2 transition-transform duration-300 block hover:scale-110" />
-        <span class="contact-label text-[#64ffda] text-lg font-bold mt-2">GitHub</span>
-      </button>
-      <button class="contact-icon-btn bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[220px] max-w-[270px] min-h-[220px] flex flex-col items-center justify-center overflow-hidden transition-all duration-300 p-8 text-center border-none m-6 cursor-pointer hover:shadow-2xl hover:-translate-y-2 hover:scale-105 hover:bg-[#298dff] hover:text-white" onclick="window.open('https://www.facebook.com/Jrabaraa/', '_blank')">
-        <img src="icons/Facebook.png" alt="LinkedIn" class="contact-icon-img w-20 h-20 mb-4 object-contain bg-white rounded-full border-4 border-[#64ffda] p-2 transition-transform duration-300 block hover:scale-110" />
-        <span class="contact-label text-[#64ffda] text-lg font-bold mt-2">Facebook</span>
-      </button>
-      <button class="contact-icon-btn bg-[#17315a] bg-opacity-95 text-[#cfe3ff] rounded-3xl shadow-2xl min-w-[220px] max-w-[270px] min-h-[220px] flex flex-col items-center justify-center overflow-hidden transition-all duration-300 p-8 text-center border-none m-6 cursor-pointer hover:shadow-2xl hover:-translate-y-2 hover:scale-105 hover:bg-[#298dff] hover:text-white" onclick="window.open('https://gitlab.com/jrabara101/', '_blank')">
-        <img src="icons/Gitlab.png" alt="LinkedIn" class="contact-icon-img w-20 h-20 mb-4 object-contain bg-white rounded-full border-4 border-[#64ffda] p-2 transition-transform duration-300 block hover:scale-110" />
-        <span class="contact-label text-[#64ffda] text-lg font-bold mt-2">Gitlab</span>
-      </button>
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 duration-300 relative">
+        <span class="absolute top-6 right-8 text-[#64ffda] text-6xl font-serif opacity-20">“</span>
+        <div>
+          <p class="text-[#cfe3ff] italic leading-relaxed text-base mb-6">
+            "He quickly mastered setting up our Ruby on Rails environment and contributed directly to our HRIS database structures. A reliable and highly proactive team member."
+          </p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-[#64ffda]/10 flex items-center justify-center text-[#64ffda] font-bold text-lg border border-[#64ffda]/30">
+            TN
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-sm">Engineering Lead</h4>
+            <p class="text-[#8892b0] text-xs">Tdch Navy Phil</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-3xl p-8 flex flex-col justify-between hover:-translate-y-2 duration-300 relative">
+        <span class="absolute top-6 right-8 text-[#64ffda] text-6xl font-serif opacity-20">“</span>
+        <div>
+          <p class="text-[#cfe3ff] italic leading-relaxed text-base mb-6">
+            "Johnrick demonstrated high initiative in building fullstack .NET apps and collaborative group projects. His rapid learning curve and passion make him a great asset."
+          </p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-lg border border-white/20">
+            WP
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-sm">Lead Instructor</h4>
+            <p class="text-[#8892b0] text-xs">WPH Coding Bootcamp</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact" class="contact max-w-[1000px] mx-auto py-16 animate-on-scroll">
+    <h2 class="carousel-title text-center text-4xl font-bold mb-16 text-[#cfe3ff]">Get In Touch</h2>
+    
+    <div class="flex flex-col md:flex-row gap-12 px-6">
+      
+      <!-- Contact Info & Links -->
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h3 class="text-white text-3xl font-bold mb-4 font-sans text-left">Let's build something amazing together!</h3>
+          <p class="text-[#8892b0] leading-relaxed text-base mb-8 text-left">
+            Whether you have a web application idea, need a custom dashboard setup, or want a freelance developer to join your project team — my inbox is always open.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <a href="mailto:jrabara101@gmail.com" class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-[#298dff] hover:text-white transition duration-300 group decoration-none">
+            <img src="icons/Gmail.png" alt="Email" class="w-12 h-12 mb-2 object-contain bg-white rounded-full p-2 border border-white/20" />
+            <span class="text-[#64ffda] group-hover:text-white font-bold text-sm">Email Me</span>
+          </a>
+          <a href="https://github.com/Jrabara101" target="_blank" class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-[#298dff] hover:text-white transition duration-300 group decoration-none">
+            <img src="icons/Github.png" alt="GitHub" class="w-12 h-12 mb-2 object-contain bg-white rounded-full p-2 border border-white/20" />
+            <span class="text-[#64ffda] group-hover:text-white font-bold text-sm">GitHub</span>
+          </a>
+          <a href="https://gitlab.com/jrabara101/" target="_blank" class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-[#298dff] hover:text-white transition duration-300 group decoration-none">
+            <img src="icons/Gitlab.png" alt="GitLab" class="w-12 h-12 mb-2 object-contain bg-white rounded-full p-2 border border-white/20" />
+            <span class="text-[#64ffda] group-hover:text-white font-bold text-sm">GitLab</span>
+          </a>
+          <a href="https://www.facebook.com/Jrabaraa/" target="_blank" class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-[#298dff] hover:text-white transition duration-300 group decoration-none">
+            <img src="icons/Facebook.png" alt="Facebook" class="w-12 h-12 mb-2 object-contain bg-white rounded-full p-2 border border-white/20" />
+            <span class="text-[#64ffda] group-hover:text-white font-bold text-sm">Facebook</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="flex-1 glass-card rounded-3xl p-8 shadow-2xl relative overflow-hidden" id="contactFormContainer">
+        <form id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
+          <div class="mb-6 text-left">
+            <label for="name" class="block text-white font-bold text-sm mb-2 text-left">Full Name</label>
+            <input type="text" id="name" name="name" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#64ffda] transition duration-300 placeholder-white/20" placeholder="John Doe" />
+            <p class="text-red-400 text-xs mt-1 hidden text-left" id="nameError">Please enter your full name.</p>
+          </div>
+          
+          <div class="mb-6 text-left">
+            <label for="email" class="block text-white font-bold text-sm mb-2 text-left">Email Address</label>
+            <input type="email" id="email" name="email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#64ffda] transition duration-300 placeholder-white/20" placeholder="name@example.com" />
+            <p class="text-red-400 text-xs mt-1 hidden text-left" id="emailError">Please enter a valid email address.</p>
+          </div>
+
+          <div class="mb-6 text-left">
+            <label for="message" class="block text-white font-bold text-sm mb-2 text-left">Your Message</label>
+            <textarea id="message" name="message" required rows="5" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#64ffda] transition duration-300 placeholder-white/20" placeholder="Hi Johnrick, I'd like to collaborate on..."></textarea>
+            <p class="text-red-400 text-xs mt-1 hidden text-left" id="messageError">Please write a short message.</p>
+          </div>
+
+          <button type="submit" class="w-full py-3 bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] hover:from-[#298dff] hover:to-[#64ffda] hover:text-white rounded-xl font-bold transition duration-300 cursor-pointer shadow-lg border-none text-base">
+            Send Message
+          </button>
+        </form>
+
+        <!-- Form Success State -->
+        <div id="successState" class="absolute inset-0 bg-[#0f223f] flex flex-col items-center justify-center p-8 text-center transition-all duration-500 opacity-0 pointer-events-none translate-y-10">
+          <div class="w-20 h-20 rounded-full bg-[#64ffda]/10 flex items-center justify-center text-[#64ffda] mb-6 border-2 border-[#64ffda]/30">
+            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h3 class="text-white text-2xl font-bold mb-2">Message Sent!</h3>
+          <p class="text-[#cfe3ff] text-base mb-6">Thank you for reaching out. Johnrick will reply to your inbox shortly.</p>
+          <button onclick="resetContactForm()" class="px-6 py-2 border border-[#64ffda]/40 text-[#64ffda] hover:bg-[#64ffda]/10 font-semibold rounded-xl transition cursor-pointer bg-transparent">
+            Send Another Message
+          </button>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -463,6 +773,40 @@
     <p class="text-[#cfe3ff]">© 2025 Johnrick E. Rabara. All rights reserved.</p>
   </footer>
 
-    <script src="js/main.js"></script>
+    <!-- Project Modal -->
+  <div id="projectModal" class="fixed inset-0 z-[1000] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300">
+    <div class="glass-card rounded-3xl max-w-[650px] w-full overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col">
+      <button id="closeModal" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 flex items-center justify-center text-xl transition-all border-none cursor-pointer z-10">&times;</button>
+      
+      <div class="relative w-full h-[260px] bg-[#f4f7fa] flex items-center justify-center p-6 border-b border-white/10">
+        <img id="modalImage" src="" alt="Project Image" class="max-h-full max-w-full object-contain" />
+      </div>
+      
+      <div class="p-8 flex-1 overflow-y-auto max-h-[60vh]">
+        <h3 id="modalTitle" class="text-3xl font-bold text-white mb-2">Project Title</h3>
+        <p id="modalCategory" class="text-sm font-semibold text-[#64ffda] uppercase tracking-wider mb-4">Category</p>
+        
+        <p id="modalDescription" class="text-[#cfe3ff] text-base leading-relaxed mb-6">Detailed project description goes here...</p>
+        
+        <div class="mb-8">
+          <h4 class="text-white font-bold mb-3 text-lg">Tech Stack & Tools</h4>
+          <div id="modalTech" class="flex flex-wrap gap-2">
+            <!-- Tech badges will be injected here -->
+          </div>
+        </div>
+        
+        <div class="flex flex-row justify-end gap-4">
+          <a id="modalSourceBtn" href="" target="_blank" class="px-6 py-2.5 rounded-xl border border-[#298dff]/40 text-[#298dff] hover:bg-[#298dff]/10 font-bold transition flex items-center gap-2 cursor-pointer decoration-none">
+            <span>View Source</span>
+          </a>
+          <a id="modalLiveBtn" href="" target="_blank" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] hover:from-[#298dff] hover:to-[#64ffda] hover:text-white font-bold transition flex items-center gap-2 cursor-pointer decoration-none">
+            <span>Live Demo</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

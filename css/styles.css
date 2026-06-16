@@ -1,3 +1,62 @@
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', var(--font-sans);
+  
+  --bg-primary: #0a192f;
+  --bg-secondary: #0f223f;
+  --accent-primary: #64ffda;
+  --accent-secondary: #298dff;
+  --text-primary: #cfe3ff;
+  --text-secondary: #8892b0;
+  
+  --glass-bg: rgba(23, 49, 90, 0.4);
+  --glass-border: rgba(100, 255, 218, 0.15);
+  --glass-glow: rgba(100, 255, 218, 0.05);
+}
+
+body {
+  font-family: var(--font-sans) !important;
+}
+
+h1, h2, h3, h4, h5, h6, .carousel-title {
+  font-family: var(--font-heading) !important;
+}
+
+.font-sans {
+  font-family: var(--font-sans) !important;
+}
+
+.font-roboto {
+  font-family: var(--font-sans) !important;
+}
+
+/* Glassmorphic Cards */
+.glass-card {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(100, 255, 218, 0.4) !important;
+  box-shadow: 0 12px 40px 0 rgba(100, 255, 218, 0.15);
+}
+
+/* Background Spotlight Glow */
+.spotlight-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle 600px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(100, 255, 218, 0.06), transparent 80%);
+}
+
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
@@ -543,5 +602,17 @@ button, a, .card-btn {
 .page-loading.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Services Animation Initial State */
+#services .glass-card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Testimonials Animation Initial State */
+#testimonials .glass-card {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
