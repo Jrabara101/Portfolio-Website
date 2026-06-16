@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Daily UI Gallery | Johnrick Rabara</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body {
+        background-color: #0F0F12;
+        color: #e4e1e6;
+        overflow-x: hidden;
+    }
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+    .glass-card:hover {
+        border: 1px solid rgba(0, 219, 233, 0.4);
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-4px);
+    }
+    .spotlight-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: -1;
+        background: radial-gradient(circle 600px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0, 219, 233, 0.06), transparent 80%);
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    
+    /* Expanded Stage Overlay Styling */
+    #expansionStage {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #expansionStage.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    #expansionStage .stage-content {
+        transform: scale(0.95);
+        opacity: 0;
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #expansionStage.active .stage-content {
+        transform: scale(1);
+        opacity: 1;
+    }
+    .preview-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #ffffff;
+    }
+    
+    /* Card Grid items animation */
+    .gallery-card {
+        opacity: 0;
+        transform: scale(0.95);
+        animation: cardAppear 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes cardAppear {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+  </style>
+  <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "inverse-primary": "#006970",
+                "surface-container-lowest": "#0e0e11",
+                "tertiary": "#faf3ff",
+                "on-error-container": "#ffdad6",
+                "surface-variant": "#353438",
+                "on-primary-fixed": "#002022",
+                "error": "#ffb4ab",
+                "surface-dim": "#131316",
+                "outline": "#849495",
+                "surface-tint": "#00dbe9",
+                "primary-fixed": "#7df4ff",
+                "secondary-fixed": "#79ff5b",
+                "on-primary-container": "#006970",
+                "on-secondary-fixed": "#022100",
+                "outline-variant": "#3b494b",
+                "surface-container-high": "#2a2a2d",
+                "on-primary-fixed-variant": "#004f54",
+                "secondary": "#d7ffc5",
+                "on-error": "#690005",
+                "on-surface": "#e4e1e6",
+                "error-container": "#93000a",
+                "on-surface-variant": "#b9cacb",
+                "on-tertiary-container": "#7213ff",
+                "on-secondary": "#053900",
+                "surface-container-highest": "#353438",
+                "surface-bright": "#39393c",
+                "primary-fixed-dim": "#00dbe9",
+                "primary-container": "#00f0ff",
+                "surface": "#131316",
+                "primary": "#dbfcff",
+                "on-secondary-fixed-variant": "#095300",
+                "background": "#131316",
+                "on-secondary-container": "#0f6d00",
+                "inverse-surface": "#e4e1e6",
+                "tertiary-container": "#e1d2ff",
+                "inverse-on-surface": "#303033",
+                "surface-container": "#1f1f22",
+                "on-tertiary": "#3c0090",
+                "secondary-container": "#2ff801",
+                "tertiary-fixed": "#e9ddff",
+                "tertiary-fixed-dim": "#d1bcff",
+                "secondary-fixed-dim": "#2ae500",
+                "surface-container-low": "#1b1b1e",
+                "on-tertiary-fixed-variant": "#5700c9",
+                "on-background": "#e4e1e6",
+                "on-primary": "#00363a",
+                "on-tertiary-fixed": "#23005b"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "margin-mobile": "16px",
+                "gutter": "24px",
+                "container-max": "1440px",
+                "margin-desktop": "48px",
+                "unit": "8px"
+              },
+              "fontFamily": {
+                "headline-xl": ["Space Grotesk"],
+                "headline-lg-mobile": ["Space Grotesk"],
+                "body-md": ["Inter"],
+                "headline-md": ["Space Grotesk"],
+                "label-sm": ["Space Grotesk"],
+                "headline-lg": ["Space Grotesk"],
+                "body-lg": ["Inter"],
+                "label-md": ["Space Grotesk"]
+              },
+              "fontSize": {
+                "headline-xl": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+  </script>
+</head>
+<body class="font-body-md text-body-md text-on-surface">
+  <div class="spotlight-glow"></div>
+
+  <!-- Header Navigation -->
+  <header class="w-full px-margin-desktop py-6 sticky top-0 z-45 backdrop-blur-md border-b border-white/10 transition-all duration-300 ease-in-out bg-transparent flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface font-label-md text-label-sm uppercase tracking-widest border border-white/10 transition decoration-none">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        <span>Back to Portfolio</span>
+      </a>
+    </div>
+    <div>
+      <h1 class="text-headline-md font-headline-md font-bold text-primary-fixed-dim italic m-0 uppercase tracking-wider">DAILY UI PLAYGROUND</h1>
+    </div>
+  </header>
+
+  <!-- Filter & Search Controls Header -->
+  <section class="max-w-[1440px] mx-auto px-4 md:px-8 mt-6">
+    <div class="glass-card rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <!-- Search Input -->
+      <div class="relative w-full md:w-80 flex items-center">
+        <input type="text" id="searchBar" onkeyup="filterProjects()" placeholder="Search day or title..." class="w-full bg-surface-container-lowest border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-on-surface focus:outline-none focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim transition placeholder-on-surface-variant/30 text-label-sm font-label-sm" />
+        <span class="material-symbols-outlined absolute left-3 text-on-surface-variant/40 text-lg">search</span>
+      </div>
+      <!-- Category Tabs -->
+      <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none" id="category-tabs">
+        <button onclick="setCategory(event, 'all')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-primary-fixed-dim/20 text-primary-fixed-dim border border-primary-fixed-dim/30 cursor-pointer whitespace-nowrap">All</button>
+        <button onclick="setCategory(event, 'forms')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Forms</button>
+        <button onclick="setCategory(event, 'checkout')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Checkout</button>
+        <button onclick="setCategory(event, 'dashboards')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Dashboards</button>
+        <button onclick="setCategory(event, 'utilities')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Utilities</button>
+        <button onclick="setCategory(event, 'pages')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Pages</button>
+        <button onclick="setCategory(event, 'design')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Design</button>
+        <button onclick="setCategory(event, 'profile')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Profile</button>
+        <button onclick="setCategory(event, 'social')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Social</button>
+        <button onclick="setCategory(event, 'music')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Music</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection of Cards Grid -->
+  <main class="max-w-[1440px] mx-auto px-4 md:px-8 py-8">
+    <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Project cards will be dynamically rendered here -->
+    </div>
+  </main>
+
+  <!-- Fullscreen Expanded Stage Overlay -->
+  <div id="expansionStage" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+    <div class="stage-content glass-card w-full h-full max-w-6xl max-h-[90vh] rounded-xl flex flex-col overflow-hidden">
+      <!-- Stage Header -->
+      <div class="p-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-low/40">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <span id="stageDayLabel" class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-primary-fixed-dim/15 text-primary-fixed-dim border border-primary-fixed-dim/20 uppercase tracking-wider">DAY 01</span>
+            <span id="stageCategoryLabel" class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-secondary-fixed/15 text-secondary-fixed border border-secondary-fixed/20 uppercase tracking-wider">FORMS</span>
+          </div>
+          <h2 id="stageTitle" class="text-headline-md font-headline-md font-bold text-on-surface m-0 uppercase">Sign up Form</h2>
+          <p id="stageTech" class="text-body-md font-body-md text-on-surface-variant mt-1 mb-0">Tech stack: HTML5, CSS3, JavaScript</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <!-- Navigation controls -->
+          <button onclick="navigateProject(-1)" class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface border border-white/10 transition flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg">navigate_before</span>
+          </button>
+          <button onclick="navigateProject(1)" class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface border border-white/10 transition flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg">navigate_next</span>
+          </button>
+          <!-- Launch live button -->
+          <a id="stageLiveBtn" href="#" target="_blank" class="px-6 py-3 rounded-lg bg-primary-fixed-dim text-on-primary-fixed font-label-md text-label-md uppercase tracking-wider hover:bg-primary hover:shadow-[0_0_20px_rgba(0,219,233,0.5)] transition duration-300 flex items-center gap-2 decoration-none cursor-pointer">
+            <span>Launch Live</span>
+            <span class="material-symbols-outlined text-md">open_in_new</span>
+          </a>
+          <!-- Close button -->
+          <button onclick="closeExpansion()" class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-error border border-white/10 transition flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg">close</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Stage Live Viewer Iframe -->
+      <div class="flex-1 relative bg-[#ffffff]">
+        <!-- Dynamic loading indicator -->
+        <div id="iframeLoader" class="absolute inset-0 flex items-center justify-center bg-surface-dim z-10 transition-opacity duration-300">
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-12 h-12 border-4 border-primary-fixed-dim/30 border-t-primary-fixed-dim rounded-full animate-spin"></div>
+            <span class="font-label-sm text-label-sm uppercase text-primary-fixed-dim tracking-wider">Configuring Playground Node...</span>
+          </div>
+        </div>
+        <iframe id="stageIframe" class="w-full h-full preview-iframe" onload="hideIframeLoader()"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Project Database (25 links)
+    const projects = [
+      {
+        day: 1,
+        title: "Sign up Form",
+        category: "forms",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://sign-up-form12.vercel.app/",
+        tags: ["Forms", "Input", "Authentication"]
+      },
+      {
+        day: 2,
+        title: "Credit Card Checkout",
+        category: "checkout",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://credit-checkout-32.vercel.app/",
+        tags: ["Checkout", "Payment", "E-commerce"]
+      },
+      {
+        day: 3,
+        title: "Landing Page",
+        category: "landing",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://album-landing.vercel.app/",
+        tags: ["Landing Page", "Hero", "Design"]
+      },
+      {
+        day: 4,
+        title: "Calculator",
+        category: "utilities",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://calc-web-one.vercel.app/",
+        tags: ["Utilities", "Calculator", "Math"]
+      },
+      {
+        day: 5,
+        title: "App Icon",
+        category: "design",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://user-profile-two-psi.vercel.app/",
+        tags: ["Design", "App Icon", "Logo"]
+      },
+      {
+        day: 6,
+        title: "User Profile",
+        category: "profile",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://credit-checkout-32.vercel.app/",
+        tags: ["Profile", "User", "Card"]
+      },
+      {
+        day: 7,
+        title: "Settings",
+        category: "settings",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://settings-web.vercel.app/",
+        tags: ["Settings", "Options", "Control"]
+      },
+      {
+        day: 8,
+        title: "404 Page",
+        category: "pages",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://404-page-ruddy-seven.vercel.app/",
+        tags: ["Pages", "404", "Not Found"]
+      },
+      {
+        day: 9,
+        title: "Music Player",
+        category: "music",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://daily-ui-gray.vercel.app/",
+        tags: ["Music", "Audio", "Player"]
+      },
+      {
+        day: 10,
+        title: "Social Share Button",
+        category: "social",
+        tech: "HTML5, CSS3, JavaScript, Vercel",
+        link: "https://social-sharing-phi.vercel.app/",
+        tags: ["Social", "Buttons", "Sharing"]
+      },
+      {
+        day: 11,
+        title: "Flash Message System",
+        category: "utilities",
+        tech: "HTML5, CSS3, JavaScript, Netlify",
+        link: "https://flash-message-system.netlify.app/",
+        tags: ["Utilities", "Alerts", "Notifications"]
+      },
+      {
+        day: 12,
+        title: "Product Page",
+        category: "checkout",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://product-page-website.netlify.app/",
+        tags: ["E-commerce", "Product", "Showcase"]
+      },
+      {
+        day: 13,
+        title: "Messaging Dev",
+        category: "chat",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://messaging-dev.jrabara101.workers.dev/",
+        tags: ["Chat", "Messaging", "Real-time"]
+      },
+      {
+        day: 14,
+        title: "Timer Countdown",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://timer-countdown.jrabara101.workers.dev/",
+        tags: ["Utilities", "Timer", "Countdown"]
+      },
+      {
+        day: 15,
+        title: "On/Off Switch",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://on-off-switch.jrabara101.workers.dev/",
+        tags: ["UI Control", "Switch", "Toggle"]
+      },
+      {
+        day: 16,
+        title: "Pop Up Overlay",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://pop-up-overlay.jrabara101.workers.dev/",
+        tags: ["UI Control", "Overlay", "Popup"]
+      },
+      {
+        day: 17,
+        title: "Receipt Card",
+        category: "checkout",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://receipt.jrabara101.workers.dev/",
+        tags: ["E-commerce", "Receipt", "Invoice"]
+      },
+      {
+        day: 18,
+        title: "Dashboard panel",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://dashboard.jrabara101.workers.dev/",
+        tags: ["Dashboards", "Metrics", "SaaS"]
+      },
+      {
+        day: 19,
+        title: "Leaderboard widget",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://leaderboard.jrabara101.workers.dev/",
+        tags: ["Dashboards", "Scoreboard", "Stats"]
+      },
+      {
+        day: 20,
+        title: "Location Tracker",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://location-tracker.jrabara101.workers.dev/",
+        tags: ["Map", "GPS", "Tracker"]
+      },
+      {
+        day: 21,
+        title: "Home Dashboard",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://home-dashboard.jrabara101.workers.dev/",
+        tags: ["Dashboards", "Home", "IoT"]
+      },
+      {
+        day: 22,
+        title: "Music Player Search",
+        category: "music",
+        tech: "HTML5, CSS3, JavaScript, Netlify",
+        link: "https://music-search-player.netlify.app/",
+        tags: ["Music", "Search", "Audio"]
+      },
+      {
+        day: 23,
+        title: "Smart Onboarding",
+        category: "pages",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://smart-onboard.jrabara101.workers.dev/",
+        tags: ["Pages", "Onboarding", "UX"]
+      },
+      {
+        day: 24,
+        title: "Premium Airline Onboard",
+        category: "pages",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://airlinepremiumonboarding.jrabara101.workers.dev/",
+        tags: ["Pages", "Onboarding", "Airline"]
+      },
+      {
+        day: 25,
+        title: "Couch TV",
+        category: "entertainment",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://couch-tv.netlify.app/",
+        tags: ["Entertainment", "Media", "Video"]
+      },
+      {
+        day: 26,
+        title: "Subscribe Template",
+        category: "forms",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://subscribetemplate.jrabara101.workers.dev/",
+        tags: ["Forms", "Subscribe", "Newsletter"]
+      },
+      {
+        day: 27,
+        title: "Profile Card",
+        category: "profile",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://profile.jrabara101.workers.dev/",
+        tags: ["Profile", "Card", "Social"]
+      },
+      {
+        day: 28,
+        title: "Contact Us Form",
+        category: "forms",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://contact-us.jrabara101.workers.dev/",
+        tags: ["Forms", "Contact", "Support"]
+      },
+      {
+        day: 29,
+        title: "Navigation Bar",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://navigation.jrabara101.workers.dev/",
+        tags: ["Navigation", "Navbar", "Header"]
+      },
+      {
+        day: 30,
+        title: "Pricing Cards",
+        category: "checkout",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://pricing.jrabara101.workers.dev/",
+        tags: ["Pricing", "SaaS", "Cards"]
+      },
+      {
+        day: 31,
+        title: "Spectral Containment",
+        category: "utilities",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://peppy-alfajores-8465bf.netlify.app/",
+        tags: ["Interactive", "Art", "Audio"]
+      },
+      {
+        day: 32,
+        title: "Crowdfund Campaign",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://sensational-panda-2ae44d.netlify.app/",
+        tags: ["Crowdfund", "Campaign", "Metrics"]
+      },
+      {
+        day: 33,
+        title: "Soda Customizer",
+        category: "design",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://refined-progress.soda-project.pages.dev/",
+        tags: ["Customizer", "Soda", "3D/CSS"]
+      },
+      {
+        day: 34,
+        title: "Car Pixel",
+        category: "design",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-34.pages.dev/",
+        tags: ["Pixel Art", "Design", "Retro"]
+      },
+      {
+        day: 35,
+        title: "Blog Post Layout",
+        category: "pages",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-35.pages.dev/",
+        tags: ["Blog", "Article", "Typography"]
+      },
+      {
+        day: 36,
+        title: "Social Share Button",
+        category: "social",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "#",
+        tags: ["Social", "Buttons", "Widget"]
+      },
+      {
+        day: 37,
+        title: "3D Weather Widget",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://3d-weatherapp.jrabara101.workers.dev/",
+        tags: ["Weather", "3D", "Widgets"]
+      },
+      {
+        day: 38,
+        title: "Calendar Dashboard",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://calendar.jrabara101.workers.dev/",
+        tags: ["Calendar", "Scheduler", "Utilities"]
+      },
+      {
+        day: 39,
+        title: "Testimonial Page",
+        category: "pages",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://testimonialwebsite.jrabara101.workers.dev/",
+        tags: ["Testimonials", "Reviews", "Feedback"]
+      },
+      {
+        day: 40,
+        title: "Recipe Explorer",
+        category: "entertainment",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://recipewebsite.jrabara101.workers.dev/",
+        tags: ["Recipes", "Food", "Blog"]
+      },
+      {
+        day: 41,
+        title: "Workout Tracker",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://workout-trackerss.netlify.app/",
+        tags: ["Workout", "Fitness", "Tracker"]
+      },
+      {
+        day: 42,
+        title: "Todo Macbook",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://todolist-macbook.jrabara101.workers.dev/",
+        tags: ["Todo List", "Tasks", "Macbook"]
+      },
+      {
+        day: 43,
+        title: "Resto App Menu",
+        category: "pages",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://restoappli.netlify.app/",
+        tags: ["Resto", "Restaurant", "Menu"]
+      },
+      {
+        day: 44,
+        title: "Favorite Chairs",
+        category: "checkout",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://favoritechesss.netlify.app/",
+        tags: ["Furniture", "Chairs", "Shop"]
+      },
+      {
+        day: 45,
+        title: "Info Card Grid",
+        category: "profile",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-45.pages.dev/",
+        tags: ["Profile", "Cards", "Bio"]
+      },
+      {
+        day: 46,
+        title: "Service Invoice",
+        category: "checkout",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://settings-page.jrabara101.workers.dev/",
+        tags: ["Invoice", "Payment", "Settings"]
+      },
+      {
+        day: 47,
+        title: "Activity Feed",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://3d-weatherapp.jrabara101.workers.dev/",
+        tags: ["Social", "Feed", "Activity"]
+      },
+      {
+        day: 48,
+        title: "Logistic Transform",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://logistics-transform.jrabara101.workers.dev/",
+        tags: ["Logistics", "Math", "Transform"]
+      },
+      {
+        day: 49,
+        title: "Advanced Toast System",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://863c6e80.daily-ui-49-toast-system.pages.dev/",
+        tags: ["Alerts", "Toast", "Notifications"]
+      },
+      {
+        day: 50,
+        title: "Job Listing Portal",
+        category: "pages",
+        tech: "HTML5, CSS3",
+        link: "#",
+        tags: ["Jobs", "Careers", "Listings"]
+      }
+    ];
+
+    let currentCategory = 'all';
+    let filteredProjects = [...projects];
+    let activeProjectIndex = -1;
+
+    // Mouse Spotlight
+    window.addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+
+    // Helper: Dynamic SVGs for each category
+    function getCategoryIcon(category) {
+      switch(category) {
+        case 'forms':
+          return `<svg class="w-full h-full text-primary-fixed-dim opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="20" y="20" width="60" height="60" rx="4" stroke-dasharray="4 2"/>
+            <rect x="30" y="32" width="40" height="8" rx="2" class="animate-pulse"/>
+            <rect x="30" y="48" width="40" height="8" rx="2"/>
+            <rect x="40" y="64" width="20" height="8" rx="4" fill="currentColor" fill-opacity="0.2"/>
+          </svg>`;
+        case 'checkout':
+          return `<svg class="w-full h-full text-secondary-fixed opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="15" y="25" width="70" height="50" rx="6"/>
+            <rect x="25" y="37" width="12" height="10" rx="2" fill="currentColor" fill-opacity="0.2"/>
+            <line x1="25" y1="58" x2="65" y2="58" stroke-dasharray="2 2"/>
+            <circle cx="70" cy="58" r="4"/>
+          </svg>`;
+        case 'landing':
+          return `<svg class="w-full h-full text-tertiary-fixed-dim opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="15" y="20" width="70" height="60" rx="4"/>
+            <line x1="15" y1="35" x2="85" y2="35"/>
+            <circle cx="28" cy="27" r="3" fill="currentColor" fill-opacity="0.2"/>
+            <rect x="25" y="45" width="20" height="25" rx="2"/>
+            <rect x="55" y="45" width="20" height="10" rx="1"/>
+            <rect x="55" y="60" width="20" height="10" rx="1"/>
+          </svg>`;
+        case 'utilities':
+          return `<svg class="w-full h-full text-primary opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="50" cy="50" r="35" stroke-dasharray="40 10"/>
+            <path d="M50 50 L70 30" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="4" fill="currentColor"/>
+          </svg>`;
+        case 'design':
+          return `<svg class="w-full h-full text-secondary opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="50,20 80,45 50,70 20,45" stroke-dasharray="3 3"/>
+            <polygon points="50,35 70,52 50,68 30,52" fill="currentColor" fill-opacity="0.1"/>
+            <polygon points="50,50 60,58 50,66 40,58" fill="currentColor" fill-opacity="0.2"/>
+          </svg>`;
+        case 'profile':
+          return `<svg class="w-full h-full text-tertiary opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="50" cy="40" r="15"/>
+            <path d="M25 75 C25 60, 35 55, 50 55 C65 55, 75 60, 75 75" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="38" stroke-dasharray="4 4"/>
+          </svg>`;
+        case 'settings':
+          return `<svg class="w-full h-full text-outline opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="50" cy="50" r="18"/>
+            <path d="M50 20 L50 32 M50 68 L50 80 M20 50 L32 50 M68 50 L80 50 M29 29 L38 38 M62 62 L71 71 M29 71 L38 62 M62 29 L71 38" stroke-linecap="round" stroke-width="3"/>
+          </svg>`;
+        case 'pages':
+          return `<svg class="w-full h-full text-primary-container opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="25" y="25" width="50" height="40" rx="3"/>
+            <rect x="35" y="35" width="50" height="40" rx="3" fill="#0F0F12" fill-opacity="0.8"/>
+            <line x1="35" y1="45" x2="85" y2="45"/>
+          </svg>`;
+        case 'music':
+          return `<svg class="w-full h-full text-secondary-container opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 50 L20 30 M35 50 L35 20 M50 50 L50 15 M65 50 L65 25 M80 50 L80 35" stroke-linecap="round" stroke-width="3"/>
+            <path d="M20 50 L20 70 M35 50 L35 80 M50 50 L50 85 M65 50 L65 75 M80 50 L80 65" stroke-linecap="round" stroke-width="3"/>
+          </svg>`;
+        case 'social':
+          return `<svg class="w-full h-full text-tertiary-container opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="50" cy="30" r="6" fill="currentColor"/>
+            <circle cx="30" cy="65" r="6"/>
+            <circle cx="70" cy="65" r="6"/>
+            <line x1="47" y1="35" x2="33" y2="60"/>
+            <line x1="53" y1="35" x2="67" y2="60"/>
+            <line x1="36" y1="65" x2="64" y2="65" stroke-dasharray="2 2"/>
+          </svg>`;
+        case 'chat':
+          return `<svg class="w-full h-full text-primary-fixed opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 35 C20 25, 30 20, 45 20 C60 20, 70 25, 70 35 C70 45, 60 50, 45 50 C40 50, 35 48, 30 52 L30 45 C24 43, 20 40, 20 35 Z"/>
+            <path d="M50 55 C54 55, 58 54, 62 52 L66 56 L66 50 C70 48, 74 44, 74 40" stroke-dasharray="3 3"/>
+          </svg>`;
+        case 'dashboards':
+          return `<svg class="w-full h-full text-secondary-fixed-dim opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="25" y="60" width="10" height="20" rx="1" fill="currentColor"/>
+            <rect x="45" y="40" width="10" height="40" rx="1" fill="currentColor" fill-opacity="0.5"/>
+            <rect x="65" y="25" width="10" height="55" rx="1" fill="currentColor" fill-opacity="0.8"/>
+            <line x1="15" y1="80" x2="85" y2="80"/>
+          </svg>`;
+        default:
+          return `<svg class="w-full h-full text-tertiary-fixed opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="20" y="30" width="60" height="40" rx="4"/>
+            <path d="M20 45 A 5 5 0 0 0 20 55 M80 45 A 5 5 0 0 0 80 55" fill="#0F0F12"/>
+            <line x1="32" y1="35" x2="32" y2="65" stroke-dasharray="2 2"/>
+            <circle cx="50" cy="50" r="6" fill="currentColor" fill-opacity="0.2"/>
+          </svg>`;
+      }
+    }
+
+    // Render Cards in Grid
+    function renderCardGrid(items) {
+      const grid = document.getElementById('projects-grid');
+      grid.innerHTML = '';
+
+      if (items.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center text-on-surface-variant/40">
+            <span class="material-symbols-outlined text-4xl block mb-2">search_off</span>
+            <p class="font-body-lg">No playground cards match your query.</p>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach((proj, index) => {
+        const card = document.createElement('div');
+        card.className = 'gallery-card glass-card rounded-xl overflow-hidden p-1 flex flex-col group cursor-pointer';
+        card.style.animationDelay = `${index * 0.03}s`;
+        card.onclick = () => expandCard(proj.day);
+
+        const paddedDay = proj.day < 10 ? `0${proj.day}` : proj.day;
+
+        // Custom styling tag classes matching design tokens
+        let categoryColor = 'text-primary-fixed-dim bg-primary-fixed-dim/10 border-primary-fixed-dim/20';
+        if (proj.category === 'checkout') categoryColor = 'text-secondary-fixed bg-secondary-fixed/10 border-secondary-fixed/20';
+        if (proj.category === 'dashboards') categoryColor = 'text-secondary-fixed-dim bg-secondary-fixed-dim/10 border-secondary-fixed-dim/20';
+        if (proj.category === 'utilities') categoryColor = 'text-primary bg-primary/10 border-primary/20';
+        if (proj.category === 'music') categoryColor = 'text-secondary-container bg-secondary-container/10 border-secondary-container/20';
+        if (proj.category === 'pages') categoryColor = 'text-primary-container bg-primary-container/10 border-primary-container/20';
+        if (proj.category === 'design') categoryColor = 'text-secondary bg-secondary/10 border-secondary/20';
+        if (proj.category === 'profile') categoryColor = 'text-tertiary bg-tertiary/10 border-tertiary/20';
+        if (proj.category === 'social') categoryColor = 'text-tertiary-container bg-tertiary-container/10 border-tertiary-container/20';
+
+        card.innerHTML = `
+          <!-- Graphic Preview Deck Container -->
+          <div class="w-full h-44 rounded-lg bg-surface-container-lowest/80 border border-white/5 relative flex items-center justify-center p-4 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-surface-dim/40 to-transparent"></div>
+            ${getCategoryIcon(proj.category)}
+            <!-- Hover Action Overlay -->
+            <div class="absolute inset-0 bg-primary-fixed-dim/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary-fixed-dim text-3xl drop-shadow-[0_0_8px_rgba(0,219,233,0.5)]">zoom_in</span>
+            </div>
+          </div>
+          <!-- Card Info -->
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div class="mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-primary-fixed-dim">Day ${paddedDay}</span>
+                <span class="text-[10px] font-label-sm uppercase tracking-widest px-2 py-0.5 rounded border ${categoryColor}">${proj.category}</span>
+              </div>
+              <h3 class="text-body-lg font-headline-md font-semibold text-on-surface group-hover:text-primary-fixed-dim transition-colors m-0 leading-tight">${proj.title}</h3>
+            </div>
+            <!-- Bottom Specs -->
+            <div class="border-t border-white/5 pt-3 flex items-center justify-between text-[11px] text-on-surface-variant/50">
+              <span class="truncate pr-2">${proj.tags[0] || 'Interactive'}</span>
+              <span class="material-symbols-outlined text-sm font-light">arrow_outward</span>
+            </div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // Expand Card and Display Live Website Frame
+    function expandCard(dayNum) {
+      activeProjectIndex = filteredProjects.findIndex(p => p.day === dayNum);
+      if (activeProjectIndex === -1) return;
+
+      const proj = filteredProjects[activeProjectIndex];
+      
+      // Update Expanded Stage Texts
+      const paddedDay = proj.day < 10 ? `0${proj.day}` : proj.day;
+      document.getElementById('stageDayLabel').textContent = `DAY ${paddedDay}`;
+      document.getElementById('stageCategoryLabel').textContent = proj.category.toUpperCase();
+      document.getElementById('stageTitle').textContent = proj.title;
+      document.getElementById('stageTech').textContent = `Tech stack: ${proj.tech}`;
+      document.getElementById('stageLiveBtn').setAttribute('href', proj.link);
+      
+      // Trigger iframe loader screen
+      const loader = document.getElementById('iframeLoader');
+      loader.style.opacity = '1';
+      loader.style.pointerEvents = 'auto';
+
+      // Set iframe source
+      document.getElementById('stageIframe').setAttribute('src', proj.link);
+
+      // Open overlay stage
+      document.getElementById('expansionStage').classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent background scrolling
+    }
+
+    // Hide loading view when iframe completes render
+    function hideIframeLoader() {
+      const loader = document.getElementById('iframeLoader');
+      loader.style.opacity = '0';
+      loader.style.pointerEvents = 'none';
+    }
+
+    // Close Expanded Viewer
+    function closeExpansion() {
+      document.getElementById('expansionStage').classList.remove('active');
+      document.getElementById('stageIframe').setAttribute('src', 'about:blank');
+      document.body.style.overflow = '';
+    }
+
+    // Next/Prev navigation
+    function navigateProject(offset) {
+      if (filteredProjects.length === 0) return;
+
+      let newIndex = activeProjectIndex + offset;
+      if (newIndex >= filteredProjects.length) newIndex = 0;
+      if (newIndex < 0) newIndex = filteredProjects.length - 1;
+
+      expandCard(filteredProjects[newIndex].day);
+    }
+
+    // Filter Logic
+    function filterProjects() {
+      const query = document.getElementById('searchBar').value.toLowerCase();
+      
+      filteredProjects = projects.filter(proj => {
+        const matchesSearch = proj.title.toLowerCase().includes(query) || 
+                              `day ${proj.day}`.includes(query) || 
+                              proj.tech.toLowerCase().includes(query) ||
+                              proj.tags.some(t => t.toLowerCase().includes(query));
+        
+        const matchesCategory = currentCategory === 'all' || 
+                                proj.category === currentCategory;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      renderCardGrid(filteredProjects);
+    }
+
+    // Handle Category Tab Change
+    function setCategory(event, catName) {
+      currentCategory = catName;
+      
+      // Update Tab highlight states
+      const tabs = document.querySelectorAll('.sidebar-tab');
+      tabs.forEach(tab => {
+        tab.className = "sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap";
+      });
+
+      event.currentTarget.className = "sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-primary-fixed-dim/20 text-primary-fixed-dim border border-primary-fixed-dim/30 cursor-pointer whitespace-nowrap";
+
+      filterProjects();
+    }
+
+    // Event listener: Close modal when clicking background overlay outside container
+    document.getElementById('expansionStage').addEventListener('click', (e) => {
+      if (e.target.id === 'expansionStage') {
+        closeExpansion();
+      }
+    });
+
+    // Event listener: Keyboard arrows/esc navigation in modal
+    document.addEventListener('keydown', (e) => {
+      const stage = document.getElementById('expansionStage');
+      if (!stage.classList.contains('active')) return;
+
+      if (e.key === 'Escape') closeExpansion();
+      if (e.key === 'ArrowRight') navigateProject(1);
+      if (e.key === 'ArrowLeft') navigateProject(-1);
+    });
+
+    // Initialize Card Layout
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCardGrid(projects);
+      // set expansionStage hidden source initially
+      document.getElementById('stageIframe').setAttribute('src', 'about:blank');
+    });
+  </script>
+</body>
+</html>
