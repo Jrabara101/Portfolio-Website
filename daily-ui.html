@@ -1,189 +1,208 @@
 <!DOCTYPE html>
 <html class="dark" lang="en">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Daily UI Gallery | Johnrick Rabara</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
   <style>
     body {
-        background-color: #0F0F12;
-        color: #e4e1e6;
-        overflow-x: hidden;
+      background-color: #0F0F12;
+      color: #e4e1e6;
+      overflow-x: hidden;
     }
+
     .glass-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
+
     .glass-card:hover {
-        border: 1px solid rgba(0, 219, 233, 0.4);
-        background: rgba(255, 255, 255, 0.07);
-        transform: translateY(-4px);
+      border: 1px solid rgba(0, 219, 233, 0.4);
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-4px);
     }
+
     .spotlight-glow {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: -1;
-        background: radial-gradient(circle 600px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0, 219, 233, 0.06), transparent 80%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      background: radial-gradient(circle 600px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0, 219, 233, 0.06), transparent 80%);
     }
+
     .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        vertical-align: middle;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
     }
-    
+
     /* Expanded Stage Overlay Styling */
     #expansionStage {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
+
     #expansionStage.active {
-        opacity: 1;
-        pointer-events: auto;
+      opacity: 1;
+      pointer-events: auto;
     }
+
     #expansionStage .stage-content {
-        transform: scale(0.95);
-        opacity: 0;
-        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
+
     #expansionStage.active .stage-content {
-        transform: scale(1);
-        opacity: 1;
+      transform: scale(1);
+      opacity: 1;
     }
+
     .preview-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        background: #ffffff;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #ffffff;
     }
-    
+
     /* Card Grid items animation */
     .gallery-card {
-        opacity: 0;
-        transform: scale(0.95);
-        animation: cardAppear 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      opacity: 0;
+      transform: scale(0.95);
+      animation: cardAppear 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
+
     @keyframes cardAppear {
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
   <script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                "inverse-primary": "#006970",
-                "surface-container-lowest": "#0e0e11",
-                "tertiary": "#faf3ff",
-                "on-error-container": "#ffdad6",
-                "surface-variant": "#353438",
-                "on-primary-fixed": "#002022",
-                "error": "#ffb4ab",
-                "surface-dim": "#131316",
-                "outline": "#849495",
-                "surface-tint": "#00dbe9",
-                "primary-fixed": "#7df4ff",
-                "secondary-fixed": "#79ff5b",
-                "on-primary-container": "#006970",
-                "on-secondary-fixed": "#022100",
-                "outline-variant": "#3b494b",
-                "surface-container-high": "#2a2a2d",
-                "on-primary-fixed-variant": "#004f54",
-                "secondary": "#d7ffc5",
-                "on-error": "#690005",
-                "on-surface": "#e4e1e6",
-                "error-container": "#93000a",
-                "on-surface-variant": "#b9cacb",
-                "on-tertiary-container": "#7213ff",
-                "on-secondary": "#053900",
-                "surface-container-highest": "#353438",
-                "surface-bright": "#39393c",
-                "primary-fixed-dim": "#00dbe9",
-                "primary-container": "#00f0ff",
-                "surface": "#131316",
-                "primary": "#dbfcff",
-                "on-secondary-fixed-variant": "#095300",
-                "background": "#131316",
-                "on-secondary-container": "#0f6d00",
-                "inverse-surface": "#e4e1e6",
-                "tertiary-container": "#e1d2ff",
-                "inverse-on-surface": "#303033",
-                "surface-container": "#1f1f22",
-                "on-tertiary": "#3c0090",
-                "secondary-container": "#2ff801",
-                "tertiary-fixed": "#e9ddff",
-                "tertiary-fixed-dim": "#d1bcff",
-                "secondary-fixed-dim": "#2ae500",
-                "surface-container-low": "#1b1b1e",
-                "on-tertiary-fixed-variant": "#5700c9",
-                "on-background": "#e4e1e6",
-                "on-primary": "#00363a",
-                "on-tertiary-fixed": "#23005b"
-              },
-              "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-              },
-              "spacing": {
-                "margin-mobile": "16px",
-                "gutter": "24px",
-                "container-max": "1440px",
-                "margin-desktop": "48px",
-                "unit": "8px"
-              },
-              "fontFamily": {
-                "headline-xl": ["Space Grotesk"],
-                "headline-lg-mobile": ["Space Grotesk"],
-                "body-md": ["Inter"],
-                "headline-md": ["Space Grotesk"],
-                "label-sm": ["Space Grotesk"],
-                "headline-lg": ["Space Grotesk"],
-                "body-lg": ["Inter"],
-                "label-md": ["Space Grotesk"]
-              },
-              "fontSize": {
-                "headline-xl": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-                "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
-              }
-            }
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-primary": "#006970",
+            "surface-container-lowest": "#0e0e11",
+            "tertiary": "#faf3ff",
+            "on-error-container": "#ffdad6",
+            "surface-variant": "#353438",
+            "on-primary-fixed": "#002022",
+            "error": "#ffb4ab",
+            "surface-dim": "#131316",
+            "outline": "#849495",
+            "surface-tint": "#00dbe9",
+            "primary-fixed": "#7df4ff",
+            "secondary-fixed": "#79ff5b",
+            "on-primary-container": "#006970",
+            "on-secondary-fixed": "#022100",
+            "outline-variant": "#3b494b",
+            "surface-container-high": "#2a2a2d",
+            "on-primary-fixed-variant": "#004f54",
+            "secondary": "#d7ffc5",
+            "on-error": "#690005",
+            "on-surface": "#e4e1e6",
+            "error-container": "#93000a",
+            "on-surface-variant": "#b9cacb",
+            "on-tertiary-container": "#7213ff",
+            "on-secondary": "#053900",
+            "surface-container-highest": "#353438",
+            "surface-bright": "#39393c",
+            "primary-fixed-dim": "#00dbe9",
+            "primary-container": "#00f0ff",
+            "surface": "#131316",
+            "primary": "#dbfcff",
+            "on-secondary-fixed-variant": "#095300",
+            "background": "#131316",
+            "on-secondary-container": "#0f6d00",
+            "inverse-surface": "#e4e1e6",
+            "tertiary-container": "#e1d2ff",
+            "inverse-on-surface": "#303033",
+            "surface-container": "#1f1f22",
+            "on-tertiary": "#3c0090",
+            "secondary-container": "#2ff801",
+            "tertiary-fixed": "#e9ddff",
+            "tertiary-fixed-dim": "#d1bcff",
+            "secondary-fixed-dim": "#2ae500",
+            "surface-container-low": "#1b1b1e",
+            "on-tertiary-fixed-variant": "#5700c9",
+            "on-background": "#e4e1e6",
+            "on-primary": "#00363a",
+            "on-tertiary-fixed": "#23005b"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "16px",
+            "gutter": "24px",
+            "container-max": "1440px",
+            "margin-desktop": "48px",
+            "unit": "8px"
+          },
+          "fontFamily": {
+            "headline-xl": ["Space Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "body-md": ["Inter"],
+            "headline-md": ["Space Grotesk"],
+            "label-sm": ["Space Grotesk"],
+            "headline-lg": ["Space Grotesk"],
+            "body-lg": ["Inter"],
+            "label-md": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }]
           }
         }
+      }
+    }
   </script>
 </head>
+
 <body class="font-body-md text-body-md text-on-surface">
   <div class="spotlight-glow"></div>
 
   <!-- Header Navigation -->
-  <header class="w-full px-margin-desktop py-6 sticky top-0 z-45 backdrop-blur-md border-b border-white/10 transition-all duration-300 ease-in-out bg-transparent flex justify-between items-center">
+  <header
+    class="w-full px-margin-desktop py-6 sticky top-0 z-45 backdrop-blur-md border-b border-white/10 transition-all duration-300 ease-in-out bg-transparent flex justify-between items-center">
     <div class="flex items-center gap-4">
-      <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface font-label-md text-label-sm uppercase tracking-widest border border-white/10 transition decoration-none">
+      <a href="index.html"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface font-label-md text-label-sm uppercase tracking-widest border border-white/10 transition decoration-none">
         <span class="material-symbols-outlined text-sm">arrow_back</span>
         <span>Back to Portfolio</span>
       </a>
     </div>
     <div>
-      <h1 class="text-headline-md font-headline-md font-bold text-primary-fixed-dim italic m-0 uppercase tracking-wider">DAILY UI PLAYGROUND</h1>
+      <h1
+        class="text-headline-md font-headline-md font-bold text-primary-fixed-dim italic m-0 uppercase tracking-wider">
+        DAILY UI PLAYGROUND</h1>
     </div>
   </header>
 
@@ -192,21 +211,32 @@
     <div class="glass-card rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
       <!-- Search Input -->
       <div class="relative w-full md:w-80 flex items-center">
-        <input type="text" id="searchBar" onkeyup="filterProjects()" placeholder="Search day or title..." class="w-full bg-surface-container-lowest border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-on-surface focus:outline-none focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim transition placeholder-on-surface-variant/30 text-label-sm font-label-sm" />
+        <input type="text" id="searchBar" onkeyup="filterProjects()" placeholder="Search day or title..."
+          class="w-full bg-surface-container-lowest border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-on-surface focus:outline-none focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim transition placeholder-on-surface-variant/30 text-label-sm font-label-sm" />
         <span class="material-symbols-outlined absolute left-3 text-on-surface-variant/40 text-lg">search</span>
       </div>
       <!-- Category Tabs -->
       <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none" id="category-tabs">
-        <button onclick="setCategory(event, 'all')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-primary-fixed-dim/20 text-primary-fixed-dim border border-primary-fixed-dim/30 cursor-pointer whitespace-nowrap">All</button>
-        <button onclick="setCategory(event, 'forms')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Forms</button>
-        <button onclick="setCategory(event, 'checkout')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Checkout</button>
-        <button onclick="setCategory(event, 'dashboards')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Dashboards</button>
-        <button onclick="setCategory(event, 'utilities')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Utilities</button>
-        <button onclick="setCategory(event, 'pages')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Pages</button>
-        <button onclick="setCategory(event, 'design')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Design</button>
-        <button onclick="setCategory(event, 'profile')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Profile</button>
-        <button onclick="setCategory(event, 'social')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Social</button>
-        <button onclick="setCategory(event, 'music')" class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Music</button>
+        <button onclick="setCategory(event, 'all')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-primary-fixed-dim/20 text-primary-fixed-dim border border-primary-fixed-dim/30 cursor-pointer whitespace-nowrap">All</button>
+        <button onclick="setCategory(event, 'forms')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Forms</button>
+        <button onclick="setCategory(event, 'checkout')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Checkout</button>
+        <button onclick="setCategory(event, 'dashboards')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Dashboards</button>
+        <button onclick="setCategory(event, 'utilities')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Utilities</button>
+        <button onclick="setCategory(event, 'pages')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Pages</button>
+        <button onclick="setCategory(event, 'design')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Design</button>
+        <button onclick="setCategory(event, 'profile')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Profile</button>
+        <button onclick="setCategory(event, 'social')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Social</button>
+        <button onclick="setCategory(event, 'music')"
+          class="sidebar-tab px-4 py-2 rounded-full text-label-sm font-label-sm uppercase tracking-wider bg-white/5 text-on-surface border border-white/10 hover:bg-white/10 cursor-pointer whitespace-nowrap">Music</button>
       </div>
     </div>
   </section>
@@ -219,45 +249,60 @@
   </main>
 
   <!-- Fullscreen Expanded Stage Overlay -->
-  <div id="expansionStage" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+  <div id="expansionStage"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
     <div class="stage-content glass-card w-full h-full max-w-6xl max-h-[90vh] rounded-xl flex flex-col overflow-hidden">
       <!-- Stage Header -->
-      <div class="p-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-low/40">
+      <div
+        class="p-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-low/40">
         <div>
           <div class="flex items-center gap-3 mb-2">
-            <span id="stageDayLabel" class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-primary-fixed-dim/15 text-primary-fixed-dim border border-primary-fixed-dim/20 uppercase tracking-wider">DAY 01</span>
-            <span id="stageCategoryLabel" class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-secondary-fixed/15 text-secondary-fixed border border-secondary-fixed/20 uppercase tracking-wider">FORMS</span>
+            <span id="stageDayLabel"
+              class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-primary-fixed-dim/15 text-primary-fixed-dim border border-primary-fixed-dim/20 uppercase tracking-wider">DAY
+              01</span>
+            <span id="stageCategoryLabel"
+              class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-secondary-fixed/15 text-secondary-fixed border border-secondary-fixed/20 uppercase tracking-wider">FORMS</span>
           </div>
-          <h2 id="stageTitle" class="text-headline-md font-headline-md font-bold text-on-surface m-0 uppercase">Sign up Form</h2>
-          <p id="stageTech" class="text-body-md font-body-md text-on-surface-variant mt-1 mb-0">Tech stack: HTML5, CSS3, JavaScript</p>
+          <h2 id="stageTitle" class="text-headline-md font-headline-md font-bold text-on-surface m-0 uppercase">Sign up
+            Form</h2>
+          <p id="stageTech" class="text-body-md font-body-md text-on-surface-variant mt-1 mb-0">Tech stack: HTML5, CSS3,
+            JavaScript</p>
         </div>
         <div class="flex items-center gap-3">
           <!-- Navigation controls -->
-          <button onclick="navigateProject(-1)" class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface border border-white/10 transition flex items-center justify-center">
+          <button onclick="navigateProject(-1)"
+            class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface border border-white/10 transition flex items-center justify-center">
             <span class="material-symbols-outlined text-lg">navigate_before</span>
           </button>
-          <button onclick="navigateProject(1)" class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface border border-white/10 transition flex items-center justify-center">
+          <button onclick="navigateProject(1)"
+            class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface border border-white/10 transition flex items-center justify-center">
             <span class="material-symbols-outlined text-lg">navigate_next</span>
           </button>
           <!-- Launch live button -->
-          <a id="stageLiveBtn" href="#" target="_blank" class="px-6 py-3 rounded-lg bg-primary-fixed-dim text-on-primary-fixed font-label-md text-label-md uppercase tracking-wider hover:bg-primary hover:shadow-[0_0_20px_rgba(0,219,233,0.5)] transition duration-300 flex items-center gap-2 decoration-none cursor-pointer">
+          <a id="stageLiveBtn" href="#" target="_blank"
+            class="px-6 py-3 rounded-lg bg-primary-fixed-dim text-on-primary-fixed font-label-md text-label-md uppercase tracking-wider hover:bg-primary hover:shadow-[0_0_20px_rgba(0,219,233,0.5)] transition duration-300 flex items-center gap-2 decoration-none cursor-pointer">
             <span>Launch Live</span>
             <span class="material-symbols-outlined text-md">open_in_new</span>
           </a>
           <!-- Close button -->
-          <button onclick="closeExpansion()" class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-error border border-white/10 transition flex items-center justify-center">
+          <button onclick="closeExpansion()"
+            class="p-3 rounded-lg bg-white/5 hover:bg-white/10 text-error border border-white/10 transition flex items-center justify-center">
             <span class="material-symbols-outlined text-lg">close</span>
           </button>
         </div>
       </div>
-      
+
       <!-- Stage Live Viewer Iframe -->
       <div class="flex-1 relative bg-[#ffffff]">
         <!-- Dynamic loading indicator -->
-        <div id="iframeLoader" class="absolute inset-0 flex items-center justify-center bg-surface-dim z-10 transition-opacity duration-300">
+        <div id="iframeLoader"
+          class="absolute inset-0 flex items-center justify-center bg-surface-dim z-10 transition-opacity duration-300">
           <div class="flex flex-col items-center gap-3">
-            <div class="w-12 h-12 border-4 border-primary-fixed-dim/30 border-t-primary-fixed-dim rounded-full animate-spin"></div>
-            <span class="font-label-sm text-label-sm uppercase text-primary-fixed-dim tracking-wider">Configuring Playground Node...</span>
+            <div
+              class="w-12 h-12 border-4 border-primary-fixed-dim/30 border-t-primary-fixed-dim rounded-full animate-spin">
+            </div>
+            <span class="font-label-sm text-label-sm uppercase text-primary-fixed-dim tracking-wider">Configuring
+              Playground Node...</span>
           </div>
         </div>
         <iframe id="stageIframe" class="w-full h-full preview-iframe" onload="hideIframeLoader()"></iframe>
@@ -305,7 +350,7 @@
         title: "App Icon",
         category: "design",
         tech: "HTML5, CSS3, JavaScript, Vercel",
-        link: "https://user-profile-two-psi.vercel.app/",
+        link: "https://daily-ui-5.pages.dev/",
         tags: ["Design", "App Icon", "Logo"]
       },
       {
@@ -313,7 +358,7 @@
         title: "User Profile",
         category: "profile",
         tech: "HTML5, CSS3, JavaScript, Vercel",
-        link: "https://credit-checkout-32.vercel.app/",
+        link: "https://user-profile-two-psi.vercel.app/",
         tags: ["Profile", "User", "Card"]
       },
       {
@@ -537,7 +582,7 @@
         title: "Car Pixel",
         category: "design",
         tech: "HTML5, CSS3, Cloudflare Pages",
-        link: "https://daily-ui-34.pages.dev/",
+        link: "https://main.daily-ui-34.pages.dev/",
         tags: ["Pixel Art", "Design", "Retro"]
       },
       {
@@ -553,7 +598,7 @@
         title: "Social Share Button",
         category: "social",
         tech: "HTML5, CSS3, Cloudflare Pages",
-        link: "#",
+        link: "https://3345a775.daily-ui-36.pages.dev/",
         tags: ["Social", "Buttons", "Widget"]
       },
       {
@@ -641,7 +686,7 @@
         title: "Activity Feed",
         category: "dashboards",
         tech: "HTML5, CSS3, Cloudflare Workers",
-        link: "https://3d-weatherapp.jrabara101.workers.dev/",
+        link: "https://daily-ui-47.pages.dev/",
         tags: ["Social", "Feed", "Activity"]
       },
       {
@@ -665,8 +710,376 @@
         title: "Job Listing Portal",
         category: "pages",
         tech: "HTML5, CSS3",
-        link: "#",
+        link: "https://joblistings.jrabara101.workers.dev/",
         tags: ["Jobs", "Careers", "Listings"]
+      },
+      {
+        day: 51,
+        title: "Newsroom 51",
+        category: "pages",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Pages",
+        link: "https://d08eebcd.daily-ui-51-newsroom.pages.dev/",
+        tags: ["News", "Articles", "Layout"]
+      },
+      {
+        day: 52,
+        title: "Brand Alchemist 52",
+        category: "design",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Pages",
+        link: "https://47406c74.daily-ui-52-brand-alchemist.pages.dev/",
+        tags: ["Branding", "Design", "Color"]
+      },
+      {
+        day: 53,
+        title: "Mega Menu 53",
+        category: "utilities",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Pages",
+        link: "https://fee5ae92.daily-ui-53-mega-menu.pages.dev/",
+        tags: ["Mega Menu", "Navigation", "Header"]
+      },
+      {
+        day: 54,
+        title: "Confirmation 54",
+        category: "checkout",
+        tech: "HTML5, CSS3, JavaScript, Netlify",
+        link: "https://confirmation-app.netlify.app/",
+        tags: ["Confirmation", "Feedback", "Overlay"]
+      },
+      {
+        day: 55,
+        title: "Resume Builder 55",
+        category: "utilities",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Workers",
+        link: "https://resume-builder.jrabara101.workers.dev/",
+        tags: ["Resume", "CV", "Creator"]
+      },
+      {
+        day: 59,
+        title: "Generative Glassmorphic Environment 59",
+        category: "design",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Workers",
+        link: "https://generative.jrabara101.workers.dev/",
+        tags: ["Glassmorphism", "Generative", "Interactive"]
+      },
+      {
+        day: 60,
+        title: "Color Grading 60",
+        category: "design",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Pages",
+        link: "https://d5e7f9db.daily-ui-60.pages.dev/",
+        tags: ["Color", "Grading", "Editor"]
+      },
+      {
+        day: 61,
+        title: "Workout 61",
+        category: "dashboards",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Workers",
+        link: "https://workouts.jrabara101.workers.dev/",
+        tags: ["Workout", "Fitness", "Tracker"]
+      },
+      {
+        day: 62,
+        title: "Coupon 62",
+        category: "checkout",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://coupon-websites.netlify.app",
+        tags: ["Coupon", "Deals", "Discount"]
+      },
+      {
+        day: 63,
+        title: "Playbook 63",
+        category: "pages",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Pages",
+        link: "https://daily-ui-63.pages.dev/",
+        tags: ["Playbook", "Guide", "Manual"]
+      },
+      {
+        day: 64,
+        title: "Selection User 64",
+        category: "profile",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Workers",
+        link: "https://selection-user.jrabara101.workers.dev/",
+        tags: ["User", "Selection", "Cards"]
+      },
+      {
+        day: 65,
+        title: "News 65",
+        category: "pages",
+        tech: "HTML5, CSS3, JavaScript, Cloudflare Workers",
+        link: "https://luminaa.jrabara101.workers.dev/#news-item-news-1776994150465-5",
+        tags: ["News", "Articles", "Reader"]
+      },
+      {
+        day: 66,
+        title: "Analytics 66",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://soft-medovik-f286b2.netlify.app/",
+        tags: ["Analytics", "Dashboard", "Charts"]
+      },
+      {
+        day: 67,
+        title: "Hostility 67",
+        category: "pages",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://hostility-apps.netlify.app/",
+        tags: ["Hostility", "Theme", "Landing"]
+      },
+      {
+        day: 68,
+        title: "Aerostack 68",
+        category: "utilities",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://aerostacker.netlify.app/",
+        tags: ["Aerostack", "SaaS", "Layout"]
+      },
+      {
+        day: 69,
+        title: "High-Fidelity Trend Discovery 69",
+        category: "design",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://horizon-eventsss.netlify.app/",
+        tags: ["Trend", "Discovery", "Fidelity"]
+      },
+      {
+        day: 71,
+        title: "Pricing 71",
+        category: "checkout",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://pricing-stratos.pages.dev/",
+        tags: ["Pricing", "SaaS", "Cards"]
+      },
+      {
+        day: 72,
+        title: "Slider 72",
+        category: "utilities",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://slider-websiter.netlify.app/",
+        tags: ["Slider", "Carousel", "Interactive"]
+      },
+      {
+        day: 73,
+        title: "Aether 73",
+        category: "design",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://851cc794.daily-ui-73.pages.dev/",
+        tags: ["Aether", "Interactive", "Creative"]
+      },
+      {
+        day: 74,
+        title: "Project Forge 74",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://5d99bd73.daily-ui-74.pages.dev/",
+        tags: ["Project", "Forge", "Manager"]
+      },
+      {
+        day: 75,
+        title: "Precision 75",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://5086d61e.daily-ui-75.pages.dev/",
+        tags: ["Precision", "Tool", "Metrics"]
+      },
+      {
+        day: 76,
+        title: "Dashboard 76",
+        category: "dashboards",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-76.pages.dev/",
+        tags: ["Dashboard", "Charts", "Metrics"]
+      },
+      {
+        day: 77,
+        title: "Animation Receipt 77",
+        category: "checkout",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-77.pages.dev/",
+        tags: ["Animation", "Receipt", "Invoice"]
+      },
+      {
+        day: 78,
+        title: "Social Media 78",
+        category: "social",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-78.pages.dev/",
+        tags: ["Social", "Media", "Feed"]
+      },
+      {
+        day: 79,
+        title: "Location 79",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-79.pages.dev/",
+        tags: ["Location", "Map", "Coordinates"]
+      },
+      {
+        day: 80,
+        title: "Calendar 80",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-80.pages.dev/",
+        tags: ["Calendar", "Scheduler", "Events"]
+      },
+      {
+        day: 81,
+        title: "Post 81",
+        category: "social",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-81.pages.dev/",
+        tags: ["Post", "Article", "Social"]
+      },
+      {
+        day: 82,
+        title: "Project Creation 82",
+        category: "forms",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-82.pages.dev/",
+        tags: ["Forms", "Creation", "Project"]
+      },
+      {
+        day: 83,
+        title: "Kinetic Action 83",
+        category: "design",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://2ccdabd3.daily-ui-83.pages.dev/",
+        tags: ["Kinetic", "Animation", "Interactive"]
+      },
+      {
+        day: 84,
+        title: "Achievement 84",
+        category: "profile",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-84.pages.dev/",
+        tags: ["Achievement", "Badges", "Stats"]
+      },
+      {
+        day: 85,
+        title: "Navigation Logs 85",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-85.pages.dev/",
+        tags: ["Navigation", "Logs", "History"]
+      },
+      {
+        day: 86,
+        title: "Game Website 86",
+        category: "entertainment",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://game-application-websitee.netlify.app/",
+        tags: ["Game", "Gaming", "Platform"]
+      },
+      {
+        day: 87,
+        title: "Terminal Logs 87",
+        category: "utilities",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://terminal-logs-website.netlify.app/",
+        tags: ["Terminal", "Logs", "CLI"]
+      },
+      {
+        day: 88,
+        title: "React App Portfolio 88",
+        category: "profile",
+        tech: "React, Tailwind CSS, Netlify",
+        link: "https://react-app-portfolioo.netlify.app/",
+        tags: ["React", "Portfolio", "Projects"]
+      },
+      {
+        day: 89,
+        title: "Terms of Service 89",
+        category: "pages",
+        tech: "HTML5, CSS3, Cloudflare Workers",
+        link: "https://3d-weatherapp.jrabara101.workers.dev/",
+        tags: ["Terms", "Legal", "Document"]
+      },
+      {
+        day: 90,
+        title: "Vision Architect 90",
+        category: "design",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-90.pages.dev/",
+        tags: ["Vision", "Architecture", "Design"]
+      },
+      {
+        day: 91,
+        title: "Terminal Link 91",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-91.pages.dev/",
+        tags: ["Terminal", "Link", "CLI"]
+      },
+      {
+        day: 92,
+        title: "The Art of opening 92",
+        category: "design",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-92.pages.dev/",
+        tags: ["Opening", "Intro", "Creative"]
+      },
+      {
+        day: 93,
+        title: "Friendly Ask 93",
+        category: "forms",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://helping-command-agent.netlify.app/",
+        tags: ["Forms", "Question", "Chatbot"]
+      },
+      {
+        day: 94,
+        title: "Marketing Websites 94",
+        category: "landing",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://market-websites.netlify.app/",
+        tags: ["Marketing", "Landing", "Business"]
+      },
+      {
+        day: 95,
+        title: "Protocol 95",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-95.pages.dev/",
+        tags: ["Protocol", "Security", "Logs"]
+      },
+      {
+        day: 96,
+        title: "Hyper Flux 96",
+        category: "design",
+        tech: "HTML5, CSS3, Surge",
+        link: "http://hyper-flux.surge.sh/",
+        tags: ["Hyper Flux", "Interactive", "Creative"]
+      },
+      {
+        day: 97,
+        title: "The Artifactor Website 97",
+        category: "landing",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://the-artifactor-website.netlify.app/",
+        tags: ["Artifact", "Platform", "Landing"]
+      },
+      {
+        day: 98,
+        title: "The Impact of revolution 98",
+        category: "pages",
+        tech: "HTML5, CSS3, Surge",
+        link: "http://the-impact-of-the-revolution.surge.sh/",
+        tags: ["Revolution", "Editorial", "History"]
+      },
+      {
+        day: 99,
+        title: "Programming 99",
+        category: "utilities",
+        tech: "HTML5, CSS3, Cloudflare Pages",
+        link: "https://daily-ui-99.pages.dev/",
+        tags: ["Programming", "Coding", "IDE"]
+      },
+      {
+        day: 100,
+        title: "High end Sports",
+        category: "landing",
+        tech: "HTML5, CSS3, Netlify",
+        link: "https://high-end-sports-website.netlify.app/",
+        tags: ["Sports", "Luxury", "Store"]
       }
     ];
 
@@ -682,7 +1095,7 @@
 
     // Helper: Dynamic SVGs for each category
     function getCategoryIcon(category) {
-      switch(category) {
+      switch (category) {
         case 'forms':
           return `<svg class="w-full h-full text-primary-fixed-dim opacity-30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="20" y="20" width="60" height="60" rx="4" stroke-dasharray="4 2"/>
@@ -831,7 +1244,7 @@
             </div>
           </div>
         `;
-        
+
         grid.appendChild(card);
       });
     }
@@ -842,7 +1255,7 @@
       if (activeProjectIndex === -1) return;
 
       const proj = filteredProjects[activeProjectIndex];
-      
+
       // Update Expanded Stage Texts
       const paddedDay = proj.day < 10 ? `0${proj.day}` : proj.day;
       document.getElementById('stageDayLabel').textContent = `DAY ${paddedDay}`;
@@ -850,7 +1263,7 @@
       document.getElementById('stageTitle').textContent = proj.title;
       document.getElementById('stageTech').textContent = `Tech stack: ${proj.tech}`;
       document.getElementById('stageLiveBtn').setAttribute('href', proj.link);
-      
+
       // Trigger iframe loader screen
       const loader = document.getElementById('iframeLoader');
       loader.style.opacity = '1';
@@ -892,15 +1305,15 @@
     // Filter Logic
     function filterProjects() {
       const query = document.getElementById('searchBar').value.toLowerCase();
-      
+
       filteredProjects = projects.filter(proj => {
-        const matchesSearch = proj.title.toLowerCase().includes(query) || 
-                              `day ${proj.day}`.includes(query) || 
-                              proj.tech.toLowerCase().includes(query) ||
-                              proj.tags.some(t => t.toLowerCase().includes(query));
-        
-        const matchesCategory = currentCategory === 'all' || 
-                                proj.category === currentCategory;
+        const matchesSearch = proj.title.toLowerCase().includes(query) ||
+          `day ${proj.day}`.includes(query) ||
+          proj.tech.toLowerCase().includes(query) ||
+          proj.tags.some(t => t.toLowerCase().includes(query));
+
+        const matchesCategory = currentCategory === 'all' ||
+          proj.category === currentCategory;
 
         return matchesSearch && matchesCategory;
       });
@@ -911,7 +1324,7 @@
     // Handle Category Tab Change
     function setCategory(event, catName) {
       currentCategory = catName;
-      
+
       // Update Tab highlight states
       const tabs = document.querySelectorAll('.sidebar-tab');
       tabs.forEach(tab => {
@@ -948,4 +1361,5 @@
     });
   </script>
 </body>
+
 </html>
