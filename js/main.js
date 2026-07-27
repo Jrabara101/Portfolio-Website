@@ -98,7 +98,8 @@
 
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('active');
-      navLinks.classList.toggle('mobile-hidden');
+      const isOpen = !navLinks.classList.toggle('mobile-hidden');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
     });
 
     
@@ -120,6 +121,7 @@
         if (window.innerWidth <= 600) {
           navLinks.classList.add('mobile-hidden');
           hamburger.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
         }
         
         // Update active state after scroll completes
@@ -528,8 +530,25 @@
       }, 100);
     });
 
-    // Add keyboard navigation for carousel
+    // Add keyboard navigation for carousel.
+    // Only fires when the carousel is actually on screen and the user isn't typing —
+    // otherwise arrow keys inside the archive search box would scrub the carousel.
+    let carouselInView = false;
+    if (carouselContainer) {
+      new IntersectionObserver((entries) => {
+        entries.forEach(entry => { carouselInView = entry.isIntersecting; });
+      }, { threshold: 0.3 }).observe(carouselContainer);
+    }
+
+    function isTypingTarget(el) {
+      if (!el) return false;
+      return el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName);
+    }
+
     document.addEventListener('keydown', (e) => {
+      if (!carouselInView || isTypingTarget(e.target)) return;
+      if (projectModal && projectModal.style.display === 'flex') return;
+
       if (e.key === 'ArrowLeft') {
         stopAutoSwipe();
         if (currentIndex > 0) {
@@ -592,7 +611,7 @@
     }
 
     // Contact Form Validation and Submission Handlers
-    window.handleContactSubmit = function(event) {
+    window.handleContactSubmit = async function(event) {
       event.preventDefault();
 
       const nameInput = document.getElementById('name');
@@ -636,30 +655,44 @@
         messageInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
       }
 
-      if (isValid) {
-        const submitBtn = event.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
+      if (!isValid) return;
 
-        // Simulate secure async submission
-        setTimeout(() => {
-          const successState = document.getElementById('successState');
-          if (successState) {
-            successState.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
-            successState.classList.add('opacity-100', 'translate-y-0');
-            successState.style.pointerEvents = 'auto';
-          }
-          
-          // Clear inputs
-          nameInput.value = '';
-          emailInput.value = '';
-          messageInput.value = '';
+      const form = event.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const formError = document.getElementById('formError');
+      const originalText = submitBtn.textContent;
 
-          // Reset button
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }, 1200);
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      if (formError) formError.classList.add('hidden');
+
+      try {
+        // Web3Forms delivers straight to the inbox tied to the access_key hidden field.
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Submission rejected');
+        }
+
+        const successState = document.getElementById('successState');
+        if (successState) {
+          successState.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+          successState.classList.add('opacity-100', 'translate-y-0');
+          successState.style.pointerEvents = 'auto';
+        }
+
+        form.reset();
+      } catch (err) {
+        console.error('Contact form submission failed:', err);
+        if (formError) formError.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
     };
 
@@ -675,4 +708,10 @@
       document.getElementById('name').style.borderColor = 'rgba(255, 255, 255, 0.1)';
       document.getElementById('email').style.borderColor = 'rgba(255, 255, 255, 0.1)';
       document.getElementById('message').style.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+      // Clear any leftover validation / delivery errors
+      ['nameError', 'emailError', 'messageError', 'formError'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
     };

@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import docx; print\\('python-docx', docx.__version__ if hasattr\\(docx,'__version__'\\) else 'ok'\\)\")",
+      "Bash(cp \"/c/Users/Admin/Portfolio-Website/CV - RABARA.docx\" CV-RABARA-BACKUP-2.docx)",
+      "Bash(python build_cv.py)",
+      "Bash(cp CV-clean.docx \"/c/Users/Admin/Portfolio-Website/CV - RABARA.docx\")",
+      "Bash(python parse_projects.py)",
+      "Bash(python gen_js.py)",
+      "Bash(cp practice-projects.js \"/c/Users/Admin/Portfolio-Website/js/practice-projects.js\")",
+      "Bash(node --check \"/c/Users/Admin/Portfolio-Website/js/practice-projects.js\")",
+      "Bash(node -e \"try{require.resolve\\('puppeteer'\\);console.log\\('puppeteer OK'\\)}catch\\(e\\){console.log\\('no puppeteer'\\)}\")",
+      "Bash(node -e \"try{require.resolve\\('playwright'\\);console.log\\('playwright OK'\\)}catch\\(e\\){console.log\\('no playwright'\\)}\")",
+      "Bash(python -c \"import playwright; print\\('py playwright OK', playwright.__version__ if hasattr\\(playwright,'__version__'\\) else ''\\)\")",
+      "Bash(SP=\"/c/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-Portfolio-Website/d4bfdcc0-109e-44fe-b22d-2c15bc37bb2f/scratchpad\" && CHROME=\"/c/Users/Admin/AppData/Local/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-win64/chrome-headless-shell.exe\" && \"$CHROME\" --headless --disable-gpu --no-sandbox --virtual-time-budget=6000 --dump-dom \"file:///C:/Users/Admin/Portfolio-Website/index.html\" > \"$SP/dom.html\" 2>\"$SP/chrome.err\"; echo \"exit=$? bytes=$\\(wc -c < \"$SP/dom.html\"\\)\")",
+      "Bash(/c/Users/Admin/AppData/Local/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-win64/chrome-headless-shell.exe --headless --disable-gpu --no-sandbox --virtual-time-budget=12000 --dump-dom file:///C:/Users/Admin/Portfolio-Website/__test.html)",
+      "Bash(SP=\"/c/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-Portfolio-Website/d4bfdcc0-109e-44fe-b22d-2c15bc37bb2f/scratchpad\" && CHROME=\"/c/Users/Admin/AppData/Local/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-win64/chrome-headless-shell.exe\" && \"$CHROME\" --headless --disable-gpu --no-sandbox --virtual-time-budget=8000 --dump-dom \"file:///C:/Users/Admin/Portfolio-Website/index.html\" > \"$SP/dom2.html\" 2>/dev/null; python - <<'PY' *)",
+      "Bash(cp project-archive.js \"/c/Users/Admin/Portfolio-Website/js/project-archive.js\")",
+      "Bash(rm -f \"/c/Users/Admin/Portfolio-Website/js/practice-projects.js\")",
+      "Bash(node --check \"/c/Users/Admin/Portfolio-Website/js/project-archive.js\")",
+      "Bash(cp index.html \"/c/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-Portfolio-Website/d4bfdcc0-109e-44fe-b22d-2c15bc37bb2f/scratchpad/index-before-merge.html\")",
+      "Bash(python \"/c/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-Portfolio-Website/d4bfdcc0-109e-44fe-b22d-2c15bc37bb2f/scratchpad/merge_section.py\")",
+      "Bash(npm -v)",
+      "Bash(magick -version)",
+      "Bash(ffmpeg -version)",
+      "Bash(python -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(npx tailwindcss *)",
+      "Bash(grep -v -i \"browserslist\\\\|caniuse\\\\|update-db\\\\|^$\")",
+      "Bash(node -e ' *)",
+      "Bash(rm -f .tmp-m3.json)",
+      "Bash(python \"C:/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-Portfolio-Website/a52d9e0e-10ea-45d4-a29b-8c4ae61050f9/scratchpad/convert_webp.py\")",
+      "Bash(python \"C:/Users/Admin/AppData/Local/Temp/claude/c--Users-Admin-Portfolio-Website/a52d9e0e-10ea-45d4-a29b-8c4ae61050f9/scratchpad/update_img_tags.py\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}  index.html \\(anchor target base\\)\\\\n\" \"http://localhost:8899/index.html\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Admin\\AppData\\Local\\Temp\\claude\\c--Users-Admin-Portfolio-Website\\d4bfdcc0-109e-44fe-b22d-2c15bc37bb2f\\scratchpad"
+    ]
+  }
+}

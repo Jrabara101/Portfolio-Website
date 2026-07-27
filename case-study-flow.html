@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study: Building FLOW | Johnrick Rabara</title>
+  <meta name="description" content="How I build FLOW — a single-platform Finance, Logistics, Operations and Workforce system — in Laravel and React at PRDGM Mugen Trading Corp, from architecture decisions through Cloudways deployment and client support." />
+  <meta name="author" content="Johnrick Rabara" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://jrabara101.vercel.app/case-study-flow.html" />
+  <meta property="og:title" content="Case Study: Building FLOW | Johnrick Rabara" />
+  <meta property="og:description" content="Architecture, deployment, and delivery decisions behind a four-module business platform built with Laravel and React." />
+  <meta property="og:image" content="https://jrabara101.vercel.app/images/ok.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tailwind.build.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-[#0a192f] text-white font-sans">
+  <div class="spotlight-glow"></div>
+
+  <!-- ---------- Top bar ---------- -->
+  <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+    <div class="max-w-[880px] mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="index.html"
+         class="inline-flex items-center gap-2 text-[#64ffda] font-bold hover:text-white transition decoration-none">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span>Back to Portfolio</span>
+      </a>
+      <a href="index.html#contact"
+         class="px-5 py-2 rounded-full bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold text-sm hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+        Get in touch
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-[880px] mx-auto px-6 py-16">
+
+    <!-- ---------- Hero ---------- -->
+    <p class="text-[#64ffda] text-sm font-bold uppercase tracking-[0.2em] mb-4">Case Study</p>
+    <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+      Building FLOW: one platform for Finance, Logistics, Operations &amp; Workforce
+    </h1>
+    <p class="text-[#cfe3ff] text-lg leading-relaxed mb-10">
+      Most small and mid-sized businesses run on four or five disconnected tools that don't talk to
+      each other &mdash; a spreadsheet for finance, a separate HR file, a chat thread for logistics.
+      FLOW is the product I build at PRDGM Mugen Trading Corp to collapse that into a single
+      platform, and this is how it gets designed, shipped, and kept running.
+    </p>
+
+    <!-- Meta strip -->
+    <div class="glass-card rounded-2xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6 mb-14">
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Role</p>
+        <p class="text-[#cfe3ff] font-bold">Full-Stack Developer</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Timeline</p>
+        <p class="text-[#cfe3ff] font-bold">Aug 2025 &ndash; Present</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Company</p>
+        <p class="text-[#cfe3ff] font-bold">PRDGM Mugen Trading</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Process</p>
+        <p class="text-[#cfe3ff] font-bold">Agile Scrum</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-16">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">Laravel</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">React</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">MySQL</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Bootstrap</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Cloudways</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">GitHub CI/CD</span>
+    </div>
+
+    <!-- ---------- The problem ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">The problem</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-4">
+        Our clients operate across e-commerce, HR, day-to-day operations, and logistics. Before FLOW,
+        each of those functions lived in its own place. That creates three concrete costs:
+      </p>
+      <ul class="space-y-3 text-[#cfe3ff] leading-relaxed">
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] font-bold shrink-0">01</span>
+          <span><strong class="text-white">Re-keying.</strong> The same order, employee, or shipment
+            gets typed into two or three systems, and the copies drift apart.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] font-bold shrink-0">02</span>
+          <span><strong class="text-white">No single source of truth.</strong> When finance and
+            operations disagree on a number, there is no system that settles it.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] font-bold shrink-0">03</span>
+          <span><strong class="text-white">Every client is different.</strong> A logistics-heavy
+            client and a retail client need genuinely different workflows, so a rigid
+            off-the-shelf product gets abandoned within weeks.</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ---------- The four pillars ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">What FLOW actually is</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-8">
+        FLOW is an acronym for the four pillars it covers. Each is a module on a shared data layer,
+        so a record created in one is immediately visible to the others.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="glass-card rounded-2xl p-6">
+          <p class="text-[#64ffda] text-4xl font-bold mb-2">F</p>
+          <h3 class="text-white text-xl font-bold mb-2">Finance</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            Checkout and order flows, invoicing, and the transaction records that the rest of the
+            platform reconciles against.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <p class="text-[#64ffda] text-4xl font-bold mb-2">L</p>
+          <h3 class="text-white text-xl font-bold mb-2">Logistics</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            Inventory and movement of goods &mdash; what exists, where it is, and what state
+            it is in.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <p class="text-[#64ffda] text-4xl font-bold mb-2">O</p>
+          <h3 class="text-white text-xl font-bold mb-2">Operations</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            The day-to-day workflows that tie the other modules together, plus the dashboards
+            management actually opens each morning.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <p class="text-[#64ffda] text-4xl font-bold mb-2">W</p>
+          <h3 class="text-white text-xl font-bold mb-2">Workforce</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            HRIS: employee records, attendance, and the role definitions that drive permissions
+            across every other module.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Architecture ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Architecture &amp; the decisions behind it</h2>
+
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-8 overflow-x-auto">
+        <pre class="text-[#cfe3ff] text-xs md:text-sm leading-relaxed font-mono whitespace-pre">
+  ┌──────────────────────────────────────────────────┐
+  │   React front end  ·  role-aware UI per module    │
+  └───────────────────────┬──────────────────────────┘
+                          │  REST (JSON)
+  ┌───────────────────────▼──────────────────────────┐
+  │   Laravel API  ·  controllers · services · auth   │
+  ├──────────────────────────────────────────────────┤
+  │   Eloquent models  ·  shared domain layer         │
+  └───────────────────────┬──────────────────────────┘
+                          │
+  ┌───────────────────────▼──────────────────────────┐
+  │   MySQL  ·  one schema, four module boundaries    │
+  └──────────────────────────────────────────────────┘</pre>
+      </div>
+
+      <div class="space-y-6">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">One database, not four services</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            The whole point of FLOW is that finance and workforce data agree with each other.
+            Splitting the modules into separate services would have meant syncing them, which
+            reintroduces exactly the drift the product exists to eliminate. A single relational
+            schema with clear module boundaries gives us referential integrity for free.
+            The trade-off is that the modules deploy together &mdash; acceptable at our scale,
+            and revisitable later.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">Laravel for the domain, React for the surface</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            Business rules &mdash; who may approve what, how a transaction settles &mdash; live in
+            Laravel services, never in the client. The React layer stays a rendering and
+            interaction concern talking to a REST API. That split means a rule changes in exactly
+            one place, and it keeps the rules enforceable rather than merely displayed.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">Roles as the configuration layer</h3>
+          <p class="text-[#8892b0] leading-relaxed text-sm">
+            Because every client needs a slightly different workflow, per-client customisation is
+            expressed through roles and permissions defined in the Workforce module rather than
+            through forked code. One codebase serves clients with genuinely different operating
+            models, which is what makes the product maintainable as the client list grows.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Deployment ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Shipping and keeping it up</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        I own the platform end to end, which includes everything after the code is written.
+        FLOW runs on a Cloudways enterprise server that I provisioned and maintain.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-[#64ffda] font-bold mb-2">Staging → production</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            Work lands on a staging environment that mirrors production, gets checked against the
+            phase's acceptance criteria, and only then gets promoted. Clients see changes on
+            staging before they are live.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-[#64ffda] font-bold mb-2">GitHub-triggered builds</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            Pushes to the main and dev branches trigger deployments via webhooks, so releases are
+            repeatable rather than a manual sequence someone has to remember correctly at 6pm.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-[#64ffda] font-bold mb-2">SSL &amp; domains</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            Certificate issuance and renewal, DNS, and domain mapping for each client deployment.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-[#64ffda] font-bold mb-2">Post-deployment monitoring</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            Watching the live site after each release, because the release is not finished when the
+            build goes green &mdash; it is finished when the client's Monday morning works.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Process ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">How the work runs</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        We work in Agile Scrum, shipping enhancements each phase. The part I find most valuable is
+        that I also do the client support for what I build: I run onboarding walkthroughs,
+        take the bug reports directly, and ship the fixes.
+      </p>
+      <div class="glass-card rounded-2xl p-6 md:p-8">
+        <p class="text-[#cfe3ff] leading-relaxed">
+          That closes a loop most developers never get to close. When you are the person who
+          explains your own interface to the user who has to live in it every day, you find out
+          within a week which of your design decisions were actually good ones. A surprising
+          amount of what I have changed in FLOW came out of a support call rather than a
+          planning session.
+        </p>
+      </div>
+    </section>
+
+    <!-- ---------- Outcomes ----------
+         NOTE TO SELF: swap these for hard numbers once you can share them —
+         e.g. active client count, onboarding time before/after, page load times,
+         release frequency, support tickets per release. Concrete figures make this
+         section land far harder than qualitative statements. Keep anything
+         commercially sensitive out. -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Where it stands</h2>
+      <ul class="space-y-3 text-[#cfe3ff] leading-relaxed">
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] shrink-0">▸</span>
+          <span>All four modules are live and in daily use, on a single shared schema.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] shrink-0">▸</span>
+          <span>Releases go out each phase through a repeatable staging-to-production pipeline
+            rather than ad-hoc manual deploys.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] shrink-0">▸</span>
+          <span>New client requirements are absorbed through role and permission configuration
+            instead of forking the codebase.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-[#64ffda] shrink-0">▸</span>
+          <span>Customer-facing landing pages ship alongside the platform to support client
+            acquisition.</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ---------- Learnings ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">What I'd do differently</h2>
+      <div class="space-y-5">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Define the module boundaries in writing on day one</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            A shared schema is only a strength while the boundaries between modules are explicit.
+            We arrived at clear ones, but I would rather have written them down before the first
+            migration than discovered them through a refactor.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Automated tests around the money paths, earlier</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            Manual QA catches interface problems well. It is a weaker guarantee for the finance
+            logic, where a regression is expensive and silent. That is the first place I would
+            add coverage.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Instrument before you need it</h3>
+          <p class="text-[#8892b0] text-sm leading-relaxed">
+            Monitoring added after a problem tells you the problem is happening. Monitoring added
+            beforehand tells you what changed. Worth the setup cost up front.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CTA ---------- -->
+    <section class="glass-card rounded-3xl p-8 md:p-10 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Want something like this built?</h2>
+      <p class="text-[#8892b0] leading-relaxed mb-7 max-w-[520px] mx-auto">
+        I build full-stack platforms end to end &mdash; architecture, implementation, deployment,
+        and the support that keeps them running.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="index.html#contact"
+           class="px-7 py-3 rounded-2xl bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+          Start a conversation
+        </a>
+        <a href="index.html#projects"
+           class="px-7 py-3 rounded-2xl border border-[#64ffda]/40 text-[#64ffda] font-bold hover:bg-[#64ffda]/10 transition decoration-none">
+          See other work
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer bg-black text-center py-6 mt-10">
+    <p class="text-[#cfe3ff]">&copy; <span id="year">2026</span> Johnrick E. Rabara. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    window.addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+  </script>
+</body>
+
+</html>
