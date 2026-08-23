@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study: Word Scramble | Johnrick Rabara</title>
+  <meta name="description" content="A retro word puzzle with an on-chain leaderboard on Stellar — two communicating Soroban contracts, badge minting via inter-contract calls, and a fee-sponsorship worker so players never need to hold XLM." />
+  <meta name="author" content="Johnrick Rabara" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Case Study: Word Scramble | Johnrick Rabara" />
+  <meta property="og:description" content="Building an on-chain leaderboard on Stellar: Soroban contracts, inter-contract badge minting, and removing the wallet-funding barrier with fee sponsorship." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tailwind.build.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-[#0a192f] text-white font-sans">
+  <div class="spotlight-glow"></div>
+
+  <!-- ---------- Top bar ---------- -->
+  <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+    <div class="max-w-[880px] mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="index.html"
+         class="inline-flex items-center gap-2 text-[#64ffda] font-bold hover:text-white transition decoration-none">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span>Back to Portfolio</span>
+      </a>
+      <a href="index.html#contact"
+         class="px-5 py-2 rounded-full bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold text-sm hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+        Get in touch
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-[880px] mx-auto px-6 py-16">
+
+    <!-- ---------- Hero ---------- -->
+    <p class="text-[#64ffda] text-sm font-bold uppercase tracking-[0.2em] mb-4">Case Study</p>
+    <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+      Word Scramble: putting a game leaderboard on-chain without making players learn crypto
+    </h1>
+    <p class="text-[#cfe3ff] text-lg leading-relaxed mb-10">
+      A retro, mid-century-themed word puzzle where solving a scramble writes your score to a
+      Soroban smart contract on Stellar, and hitting a milestone mints an achievement badge
+      automatically. The interesting engineering isn't the game &mdash; it's everything I had to
+      remove so that a player who has never heard of Stellar can still end up with a verifiable
+      on-chain score.
+    </p>
+
+    <!-- Meta strip -->
+    <div class="glass-card rounded-2xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6 mb-14">
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Role</p>
+        <p class="text-[#cfe3ff] font-bold">Solo Developer</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Timeline</p>
+        <p class="text-[#cfe3ff] font-bold">Jun &ndash; Aug 2026</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Context</p>
+        <p class="text-[#cfe3ff] font-bold">Stellar Builders</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Contracts</p>
+        <p class="text-[#cfe3ff] font-bold">3 on Mainnet</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-10">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">Soroban</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">Rust</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Stellar SDK</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Vanilla JS</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Cloudflare Workers</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">GitHub Actions</span>
+    </div>
+
+    <div class="flex flex-wrap gap-4 mb-16">
+      <a href="https://word-scramble-v1.surge.sh/" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+        Play the game
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+      <a href="https://github.com/Jrabara101/Stellar-Paradigm" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-[#64ffda]/40 text-[#64ffda] font-bold hover:bg-[#64ffda]/10 transition decoration-none">
+        View source
+      </a>
+    </div>
+
+    <!-- ---------- The problem ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">The problem</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-4">
+        A leaderboard is the oldest feature in games, and normally it's a database table. Putting it
+        on-chain buys one specific thing: the scores are verifiable and nobody &mdash; including me
+        &mdash; can quietly edit them. That's a real property worth having.
+      </p>
+      <p class="text-[#cfe3ff] leading-relaxed mb-4">
+        The cost is brutal, though. To write a score on-chain the traditional way, a player needs a
+        wallet, needs that wallet funded, needs to understand what a transaction fee is, and needs to
+        approve a signing prompt. That's four chances to lose someone before they've played a single
+        round. Most blockchain games quietly accept this and end up with an audience of people who
+        already own crypto.
+      </p>
+      <p class="text-[#cfe3ff] leading-relaxed">
+        I wanted the on-chain guarantee without the on-chain onboarding. The whole project became an
+        exercise in deleting steps between "I solved a word" and "my score is provably mine."
+      </p>
+    </section>
+
+    <!-- ---------- Architecture ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Two contracts that talk to each other</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        The on-chain layer is deliberately split. A leaderboard contract owns scores; a reward
+        contract owns badges. They're separate because they have different authorization rules and
+        different reasons to change.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">LeaderboardContract</h3>
+          <p class="text-[#8892b0] leading-relaxed mb-3">
+            Holds a top-100 table. <code class="text-[#64ffda] text-sm">submit_score</code> only
+            overwrites an entry when you actually beat your previous best, so the contract is
+            naturally idempotent &mdash; replaying a transaction can't inflate anyone's score.
+          </p>
+          <p class="text-[#8892b0] leading-relaxed">
+            Every player-facing write calls <code class="text-[#64ffda] text-sm">require_auth()</code>
+            on the player, so you can only ever write your own row.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">RewardContract</h3>
+          <p class="text-[#8892b0] leading-relaxed mb-3">
+            Mints BRONZE / SILVER / GOLD / LEGEND badges at 100, 300, 500 and 1000 points. Minting is
+            idempotent too &mdash; the same badge is never issued twice.
+          </p>
+          <p class="text-[#8892b0] leading-relaxed">
+            Its <code class="text-[#64ffda] text-sm">init</code> authorizes exactly one caller: the
+            leaderboard contract. No player, and no admin, can mint a badge directly.
+          </p>
+        </div>
+      </div>
+
+      <p class="text-[#cfe3ff] leading-relaxed mb-4">
+        The part I like most is that badges cost the player nothing extra.
+        <code class="text-[#64ffda] text-sm">submit_score</code> performs an inter-contract call into
+        the reward contract in the same transaction, so a milestone badge appears as a side effect of
+        saving your score. There's no second prompt, no second fee, and no way to end up with a score
+        saved but the badge missing &mdash; if the transaction succeeds, both happened.
+      </p>
+      <p class="text-[#cfe3ff] leading-relaxed">
+        The frontend is deliberately boring by comparison: vanilla HTML, CSS and JavaScript with no
+        framework and no build step, talking to the contracts through a single 575-line
+        <code class="text-[#64ffda] text-sm">stellar.js</code> integration layer. A game that lives or
+        dies on load time didn't need a bundler.
+      </p>
+    </section>
+
+    <!-- ---------- Fee sponsorship ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Removing the wallet-funding barrier</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        On testnet this problem hides: Friendbot funds any new account for free, so I never felt the
+        friction. Mainnet has no Friendbot. A brand-new player would arrive at a game that demanded
+        they go buy XLM before they could save a score &mdash; which is where they'd leave.
+      </p>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        So mainnet runs behind a Cloudflare Worker that does two jobs: it sponsors account creation
+        (covering the reserve for players who don't have an activated account), and it fee-bumps the
+        score submission so the player never pays a transaction fee. The player still signs &mdash;
+        they keep custody, and the contract still verifies it's their own score &mdash; but they
+        never need to hold a balance.
+      </p>
+      <div class="glass-card rounded-2xl p-6">
+        <p class="text-[#8892b0] leading-relaxed">
+          <span class="text-[#64ffda] font-bold">A bug worth remembering:</span> sponsored accounts
+          initially started with a zero balance, and Freighter refuses to sign a transaction from an
+          account showing nothing. The sponsorship was technically correct and completely unusable.
+          The wallet's own safety check was the thing standing between the player and the feature
+          &mdash; a reminder that "the transaction is valid" and "the user can actually send it" are
+          different claims.
+        </p>
+      </div>
+    </section>
+
+    <!-- ---------- Security ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">What the security review caught</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        Before deploying to mainnet I wrote a self-conducted review of all three contracts. It isn't a
+        third-party audit and I don't present it as one, but forcing myself to write down every
+        state-changing entry point and who is allowed to call it found two real access-control gaps
+        that I'd otherwise have shipped.
+      </p>
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-white text-lg font-bold mb-2">The one that mattered</h3>
+        <p class="text-[#8892b0] leading-relaxed">
+          <code class="text-[#64ffda] text-sm">set_reward_contract</code> &mdash; the function that
+          wires the leaderboard to the badge minter &mdash; took no authorization at all. On testnet
+          that's harmless. On mainnet, anyone could have called it and repointed the leaderboard at a
+          contract they controlled. It was found while re-wiring for the mainnet deploy and fixed
+          before launch, so the deployed contract ID reflects the corrected version.
+        </p>
+      </div>
+      <p class="text-[#cfe3ff] leading-relaxed">
+        The workspace also compiles with <code class="text-[#64ffda] text-sm">overflow-checks = true</code>
+        and <code class="text-[#64ffda] text-sm">panic = "abort"</code>, so an arithmetic overflow
+        halts the transaction rather than silently wrapping a score. Contract behaviour is covered by
+        a unit test suite that runs in CI on every push, alongside a check that every
+        <code class="text-[#64ffda] text-sm">contract.call(...)</code> in the frontend matches a real
+        exported function in the Rust source &mdash; a class of bug that otherwise only surfaces at
+        runtime, in front of a player.
+      </p>
+    </section>
+
+    <!-- ---------- Results ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Where it stands</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+        <div class="glass-card rounded-2xl px-5 py-6 text-center">
+          <p class="text-[#64ffda] text-3xl font-bold mb-1">3</p>
+          <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold">Contracts live</p>
+        </div>
+        <div class="glass-card rounded-2xl px-5 py-6 text-center">
+          <p class="text-[#64ffda] text-3xl font-bold mb-1">50+</p>
+          <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold">Testnet users</p>
+        </div>
+        <div class="glass-card rounded-2xl px-5 py-6 text-center">
+          <p class="text-[#64ffda] text-3xl font-bold mb-1">100</p>
+          <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold">Leaderboard cap</p>
+        </div>
+        <div class="glass-card rounded-2xl px-5 py-6 text-center">
+          <p class="text-[#64ffda] text-3xl font-bold mb-1">0</p>
+          <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold">XLM needed</p>
+        </div>
+      </div>
+      <p class="text-[#cfe3ff] leading-relaxed">
+        The leaderboard contract was redeployed once, in July 2026, to raise the cap from 10 to 100
+        entries ahead of scaling past 50 testnet users. Scores already earned on the old contract were
+        carried forward through a one-time, admin-authenticated migration rather than being wiped
+        &mdash; people had earned those, and resetting them to make my deploy easier would have been
+        the wrong trade.
+      </p>
+    </section>
+
+    <!-- ---------- Lessons ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">What I'd do differently</h2>
+      <div class="space-y-5">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Design for mainnet constraints from day one</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            Friendbot made testnet frictionless and hid the single biggest UX problem in the product.
+            The fee-sponsorship worker &mdash; probably the most important feature in the whole build
+            &mdash; only got written because mainnet forced it. If I'd developed against mainnet
+            constraints earlier, the architecture would have accounted for sponsorship from the start
+            instead of gaining it late.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Get the leaderboard sizing right before deploying</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            A cap of 10 was fine for a demo and wrong within weeks. On-chain, that mistake isn't a
+            migration script &mdash; it's a redeploy, a new contract ID, and a data migration for
+            scores real people earned. Immutability is the feature, which means the cost of a
+            careless default is much higher than it is behind a database.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Write the authorization table first, not last</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            Both access-control gaps were found by tabulating every entry point against who may call
+            it &mdash; an exercise that took an afternoon and would have taken minutes if I'd done it
+            while writing the contracts. Enumerating the callers is a design step, not a review step.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CTA ---------- -->
+    <section class="glass-card rounded-3xl p-8 md:p-10 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Want something like this built?</h2>
+      <p class="text-[#8892b0] leading-relaxed mb-7 max-w-[520px] mx-auto">
+        I build full-stack and on-chain products end to end &mdash; contracts, frontend, deployment,
+        and the unglamorous work that makes them usable by people who aren't developers.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="index.html#contact"
+           class="px-7 py-3 rounded-2xl bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+          Start a conversation
+        </a>
+        <a href="index.html#projects"
+           class="px-7 py-3 rounded-2xl border border-[#64ffda]/40 text-[#64ffda] font-bold hover:bg-[#64ffda]/10 transition decoration-none">
+          See other work
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer bg-black text-center py-6 mt-10">
+    <p class="text-[#cfe3ff]">&copy; <span id="year">2026</span> Johnrick E. Rabara. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    window.addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+  </script>
+</body>
+
+</html>

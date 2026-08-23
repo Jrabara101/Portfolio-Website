@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study: BlindRoute | Johnrick Rabara</title>
+  <meta name="description" content="Privacy-preserving delivery escrow on Midnight — a courier proves delivery in zero knowledge, releasing escrowed funds without the ledger ever learning the buyer's address, order contents, or identity." />
+  <meta name="author" content="Johnrick Rabara" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Case Study: BlindRoute | Johnrick Rabara" />
+  <meta property="og:description" content="Zero-knowledge delivery escrow on Midnight: separating verification from visibility with Compact circuits, a refund path, and browser-local proof generation." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tailwind.build.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-[#0a192f] text-white font-sans">
+  <div class="spotlight-glow"></div>
+
+  <!-- ---------- Top bar ---------- -->
+  <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+    <div class="max-w-[880px] mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="index.html"
+         class="inline-flex items-center gap-2 text-[#64ffda] font-bold hover:text-white transition decoration-none">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span>Back to Portfolio</span>
+      </a>
+      <a href="index.html#contact"
+         class="px-5 py-2 rounded-full bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold text-sm hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+        Get in touch
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-[880px] mx-auto px-6 py-16">
+
+    <!-- ---------- Hero ---------- -->
+    <p class="text-[#64ffda] text-sm font-bold uppercase tracking-[0.2em] mb-4">Case Study</p>
+    <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+      BlindRoute: proving a delivery happened without saying what was delivered
+    </h1>
+    <p class="text-[#cfe3ff] text-lg leading-relaxed mb-10">
+      A delivery escrow on Midnight where the courier releases the payment by proving, in zero
+      knowledge, that they know a secret &mdash; without that secret, the buyer's address, or
+      anyone's identity ever touching the ledger. The contract is four circuits and a clock; the
+      hard part was deciding exactly which facts the public chain is allowed to learn.
+    </p>
+
+    <!-- Meta strip -->
+    <div class="glass-card rounded-2xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6 mb-14">
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Role</p>
+        <p class="text-[#cfe3ff] font-bold">Solo Developer</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Timeline</p>
+        <p class="text-[#cfe3ff] font-bold">Jul &ndash; Aug 2026</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Network</p>
+        <p class="text-[#cfe3ff] font-bold">Midnight Preview</p>
+      </div>
+      <div>
+        <p class="text-[#8892b0] text-xs uppercase tracking-wider font-semibold mb-1">Tests</p>
+        <p class="text-[#cfe3ff] font-bold">25 cases in CI</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-10">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#64ffda]/10 text-[#64ffda]">Midnight</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#298dff]/10 text-[#298dff]">Compact</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Zero-Knowledge Proofs</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">TypeScript</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Vite</span>
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-white">Lace Wallet</span>
+    </div>
+
+    <div class="flex flex-wrap gap-4 mb-16">
+      <a href="https://blindroute-web.surge.sh/" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+        View live demo
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+      <a href="https://github.com/Jrabara101/BlindRoute" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-[#64ffda]/40 text-[#64ffda] font-bold hover:bg-[#64ffda]/10 transition decoration-none">
+        View source
+      </a>
+    </div>
+
+    <!-- ---------- The problem ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">The problem</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-4">
+        Escrow for a physical delivery needs an answer to one question: did the package arrive? On a
+        public blockchain, the usual answer is to publish the evidence &mdash; a tracking number, a
+        delivery hash, a courier receipt. That works, and it leaks.
+      </p>
+      <p class="text-[#cfe3ff] leading-relaxed mb-4">
+        Anyone reading the ledger can now see a buyer's purchasing pattern, their delivery cadence,
+        and enough metadata to infer a great deal about them. The centralized alternative isn't
+        better: logistics providers cache plaintext addresses, which turns every one of them into a
+        breach waiting to happen. Both approaches treat "verify the delivery" and "reveal the
+        delivery" as the same operation.
+      </p>
+      <p class="text-[#cfe3ff] leading-relaxed">
+        They aren't. That's the whole thesis of this project: verification and visibility are
+        separable, and zero-knowledge proofs are how you separate them.
+      </p>
+    </section>
+
+    <!-- ---------- Privacy model ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Drawing the line between public and private</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        The design work here wasn't writing circuits &mdash; it was deciding, field by field, what the
+        ledger is allowed to know. Too much on-chain and the privacy claim is theatre; too little and
+        neither party can prove the contract behaved correctly.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-[#64ffda] font-bold mb-3">Public on the ledger</h3>
+          <p class="text-[#8892b0] leading-relaxed mb-3">
+            Escrow state (EMPTY / LOCKED / RELEASED), the payment amount, a commitment hash, derived
+            public keys for payer and courier, a shared tick clock, and the refund deadline.
+          </p>
+          <p class="text-[#8892b0] leading-relaxed">
+            <span class="text-white font-semibold">Why:</span> either party &mdash; or an outside
+            observer &mdash; must be able to confirm the escrow exists, holds what it claims, and
+            resolved legitimately.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-[#64ffda] font-bold mb-3">Private, never transmitted</h3>
+          <p class="text-[#8892b0] leading-relaxed mb-3">
+            The delivery-proof secret (standing in for a GPS ping, drop-off code, or recipient
+            signature) and each party's identity secret key. Generated in the browser, held in memory
+            for the session only.
+          </p>
+          <p class="text-[#8892b0] leading-relaxed">
+            <span class="text-white font-semibold">Why:</span> this is precisely the data the contract
+            exists to keep off-chain. It reaches no server, no wallet call, and no DOM node.
+          </p>
+        </div>
+      </div>
+
+      <p class="text-[#cfe3ff] leading-relaxed">
+        What an observer sees is an escrow appear with an amount and a hash, then later flip to
+        RELEASED alongside a valid proof. What they cannot recover at any point is the secret behind
+        that hash, or any link between a derived public key and a real person. I enforced the same
+        boundary in the UI as in the contract: the private secret is never assigned to an element or
+        written to a log line &mdash; only the public commitment and transaction results are ever
+        rendered.
+      </p>
+    </section>
+
+    <!-- ---------- Contract ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Four circuits and a clock</h2>
+      <div class="space-y-5 mb-6">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">lockEscrow &mdash; the customer commits</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            Publishes the amount, a hash commitment of the delivery secret, and a refund deadline
+            expressed in ticks. The secret itself stays in the browser; only its commitment goes
+            on-chain.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">releaseEscrow &mdash; the zero-knowledge step</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            The courier proves they know a value that hashes to the recorded commitment, without
+            disclosing it. This is the circuit that makes the whole thing work &mdash; and it is
+            noticeably slower than the others, because its proving key is roughly 5MB against
+            ~150KB for the lock circuit. Proof generation happens locally, so that cost is paid on
+            the courier's machine, not by a server that would have to be trusted.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white text-lg font-bold mb-2">refundEscrow &mdash; the escape hatch</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            The first version had a real flaw: if the courier simply never released, the customer's
+            funds were locked forever. Adding a refund path meant introducing a shared tick counter
+            as an on-chain clock &mdash; once it passes the deadline set at lock time, and only for
+            the original payer, the funds can be reclaimed.
+          </p>
+        </div>
+      </div>
+      <p class="text-[#cfe3ff] leading-relaxed">
+        Twenty-five test cases cover this: circuit logic, the full state machine including
+        double-lock and double-release rejections, the refund path (too-early rejection, successful
+        refund after the deadline, refusing anyone who isn't the payer, re-locking afterwards), and a
+        privacy test asserting no public circuit call exposes or mutates private state. All of it runs
+        in CI on every push, against a pinned Compact compiler version.
+      </p>
+    </section>
+
+    <!-- ---------- Reality ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">Working on unfinished infrastructure</h2>
+      <p class="text-[#cfe3ff] leading-relaxed mb-6">
+        Building on a young network means the ground moves. Three decisions came directly from that.
+      </p>
+      <div class="space-y-5">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Deployed to Preview, not Preprod</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            Preprod's indexer and dust-sponsor infrastructure proved unstable at submission time. I
+            confirmed the substitution with the organizers rather than shipping something that looked
+            deployed but couldn't be demonstrated.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Let the wallet do the hard parts</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            I wrote a Node CLI first, and its wallet sync hit an SDK bug where progress never advanced
+            past zero while leaking memory. Rather than fight someone else's sync implementation, the
+            browser app delegates sync, balancing, signing and proving to Lace entirely. The CLI stays
+            in the repo, documented as the alternate path, with its limitation stated plainly.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Treat error messages as a feature</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            Most failures here are environmental, not logical &mdash; a popup blocker eating the
+            signing window, a competing wallet extension, dust not yet accumulated. Eleven of the
+            tests cover error handling alone: distinguishing a user dismissing a prompt from a genuine
+            failure, and unwrapping nested error shapes into something a human can act on. On
+            infrastructure this raw, a clear error is worth more than another feature.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Lessons ---------- -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-[#cfe3ff] mb-5">What I'd do differently</h2>
+      <div class="space-y-5">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Model the failure path before the happy path</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            I built lock-and-release first and treated "courier never shows up" as an edge case to
+            handle later. It isn't an edge case &mdash; it's the scenario escrow exists for. Retrofitting
+            the refund meant adding a clock to a contract that hadn't been designed to need one. The
+            timeout should have been in the state machine from the first sketch.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Check proving cost per circuit early</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            The 30&times; difference in proving key size between release and lock is a UX fact, not a
+            footnote &mdash; it's the difference between an instant action and one that needs a
+            progress indicator and an explanation. I discovered it by feel, late. Measuring each
+            circuit's proving cost as it's written would have shaped the interface sooner.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-2">Write the privacy table on day one</h3>
+          <p class="text-[#8892b0] leading-relaxed">
+            The public/private field table became the most useful artifact in the repo &mdash; it's
+            what makes the privacy claim auditable instead of aspirational. I wrote it while
+            documenting, but it would have been a better design tool than a summary, because every
+            "should this be on-chain?" question was already answered by it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CTA ---------- -->
+    <section class="glass-card rounded-3xl p-8 md:p-10 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Want something like this built?</h2>
+      <p class="text-[#8892b0] leading-relaxed mb-7 max-w-[520px] mx-auto">
+        I build full-stack and on-chain products end to end &mdash; contracts, frontend, deployment,
+        and the careful thinking about what a system should and shouldn't reveal.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="index.html#contact"
+           class="px-7 py-3 rounded-2xl bg-gradient-to-r from-[#64ffda] to-[#298dff] text-[#0a192f] font-bold hover:from-[#298dff] hover:to-[#64ffda] hover:text-white transition decoration-none">
+          Start a conversation
+        </a>
+        <a href="index.html#projects"
+           class="px-7 py-3 rounded-2xl border border-[#64ffda]/40 text-[#64ffda] font-bold hover:bg-[#64ffda]/10 transition decoration-none">
+          See other work
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer bg-black text-center py-6 mt-10">
+    <p class="text-[#cfe3ff]">&copy; <span id="year">2026</span> Johnrick E. Rabara. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    window.addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+  </script>
+</body>
+
+</html>
