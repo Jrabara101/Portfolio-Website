@@ -1,7 +1,6 @@
 node_modules/
+dist/
 npm-debug.log*
 .DS_Store
 Thumbs.db
-
-# css/tailwind.build.css is intentionally NOT ignored — Vercel serves this repo
-# as static files with no build step, so the compiled stylesheet must be committed.
+.env.local

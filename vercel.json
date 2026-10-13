@@ -1,0 +1,17 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/daily-ui.html", "destination": "/playground", "permanent": true },
+    { "source": "/case-study-alon.html", "destination": "/work/alon", "permanent": true },
+    { "source": "/case-study-flow.html", "destination": "/work/flow", "permanent": true },
+    { "source": "/case-study-word-scramble.html", "destination": "/work/word-scramble", "permanent": true },
+    { "source": "/case-study-spark-match.html", "destination": "/work/spark-match", "permanent": true },
+    { "source": "/case-study-blindroute.html", "destination": "/work/blindroute", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/((?!.*\.).*)", "destination": "/index.html" }
+  ]
+}

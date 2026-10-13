@@ -1,0 +1,221 @@
+@import 'tailwindcss';
+/* Only scan the React app — legacy/ and the static pages in public/ carry their own CSS. */
+@source not '../../legacy';
+@source not '../../public';
+@source not '../../resume';
+@import 'lenis/dist/lenis.css';
+
+/* ---------------------------------------------------------------------------
+   Design tokens — "editorial dark".
+   One near-black canvas, one warm off-white, one sharp accent. Everything else
+   is a tint of those three so the accent stays the only loud thing on screen.
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-ink: #0c0c0d;
+  --color-ink-2: #141416;
+  --color-ink-3: #1c1c1f;
+  --color-paper: #edeae3;
+  --color-paper-2: #c9c5bc;
+  --color-mute: #8e8b84;
+  --color-line: rgb(237 234 227 / 0.12);
+  --color-accent: #ff5b2e;
+  --color-accent-soft: rgb(255 91 46 / 0.14);
+
+  --font-display: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-sans: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --text-mega: clamp(3.25rem, 11vw, 10.5rem);
+  --text-mega--line-height: 0.92;
+  --text-display: clamp(2.5rem, 6.5vw, 5.75rem);
+  --text-display--line-height: 0.98;
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  img {
+    user-select: none;
+  }
+
+  /* The custom cursor replaces the native one only on fine pointers. */
+  @media (pointer: fine) {
+    html.has-cursor,
+    html.has-cursor a,
+    html.has-cursor button {
+      cursor: none;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+  }
+
+  .hairline {
+    border-color: var(--color-line);
+  }
+
+  .container-x {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 3.5rem);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-out-expo);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+    background-position: 0% 100%;
+  }
+
+  .prose-case p + p {
+    margin-top: 1.1em;
+  }
+  .prose-case code,
+  .code-inline {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    padding: 0.1em 0.4em;
+    border-radius: 0.35em;
+    background: var(--color-ink-3);
+    color: var(--color-paper);
+    border: 1px solid var(--color-line);
+  }
+}
+
+/* Film grain — a fixed, non-interactive noise layer that gives flat black some tooth. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-2%, 6%); }
+  80% { transform: translate(5%, -2%); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgb(255 91 46 / 0.55); }
+  70% { box-shadow: 0 0 0 10px rgb(255 91 46 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(255 91 46 / 0); }
+}
+
+.marquee-track {
+  animation: marquee var(--marquee-duration, 32s) linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .marquee-track,
+  .pulse-dot {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Daily UI playground — category art reacts to its card being hovered.
+   --------------------------------------------------------------------------- */
+.art-card .draw {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 0;
+}
+.art-card:hover .draw,
+.art-card:focus-visible .draw {
+  animation: art-draw 1.1s var(--ease-out-expo) both;
+}
+.art-card:hover .art-spin {
+  animation: art-spin 1.4s var(--ease-out-expo) both;
+}
+.art-card .art-spin {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+.art-card .art-bars > * {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.art-card:hover .art-bars > * {
+  animation: art-bars 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes art-draw {
+  from { stroke-dashoffset: 240; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes art-spin {
+  from { transform: rotate(-180deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes art-bars {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0.45); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-card:hover .draw,
+  .art-card:hover .art-spin,
+  .art-card:hover .art-bars > * {
+    animation: none;
+  }
+}
