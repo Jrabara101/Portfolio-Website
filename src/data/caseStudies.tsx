@@ -434,6 +434,221 @@ export const caseStudies: CaseStudy[] = [
     },
   },
 
+  /* ------------------------------------------------------------ Noir Wallet */
+  {
+    slug: 'noir',
+    name: 'Noir Wallet',
+    eyebrow: 'Case Study · Payments on Stellar',
+    title: 'Noir Wallet: paying with a tap, settling on Stellar',
+    lede: (
+      <>
+        A contactless wallet built on the x402 protocol. Tap an NFC card, RFID sticker, or wearable at a terminal and the
+        linked Stellar wallet pays: no app to open, no phone to unlock, no confirmation screen. Behind that one tap sit three
+        Soroban contracts that decide who owns a device, who may spend for it, and how much.
+      </>
+    ),
+    summary:
+      'Contactless tap-to-pay on the x402 protocol. Tap an NFC tag or wearable and three Soroban contracts settle the payment on Stellar in under two seconds.',
+    cardTags: ['Stellar', 'Soroban', 'x402'],
+    category: 'Product · Blockchain payments',
+    year: '2026',
+    cover: {
+      src: '/images/noir/landing.webp',
+      alt: 'The noirx402.com landing page: "Tap. Pay. Done." beside the Noir Wallet app',
+      width: 1426,
+      height: 877,
+      fit: 'contain',
+      bg: '#0a0a0a',
+    },
+    meta: [
+      { label: 'Role', value: 'Smart Contract & Backend Developer' },
+      { label: 'Timeline', value: 'Jun 2026 – Present' },
+      { label: 'Network', value: 'Stellar Testnet + Mainnet' },
+      { label: 'Tests', value: '60 contract · 306 app' },
+    ],
+    tags: ['Stellar', 'Soroban', 'Rust', 'x402', 'NFC / RFID', 'React Native', 'Expo', 'TypeScript', 'PDAX'],
+    links: [
+      { label: 'Visit noirx402.com', href: 'https://noirx402.com/', primary: true },
+      { label: 'View source', href: 'https://github.com/noirx402/noir' },
+    ],
+    sections: [
+      {
+        id: 'problem',
+        title: 'The problem',
+        blocks: [
+          {
+            type: 'p',
+            body: 'Crypto payments ask a lot of the person paying: unlock the phone, open the wallet, scan a code, check the amount, confirm, wait. That is fine for sending money to a friend. It does not work at a transit turnstile, a campus canteen, or an event gate, where a queue is waiting and the payment has to happen in the time it takes to walk through.',
+          },
+          {
+            type: 'p',
+            body: 'Card networks solved that years ago with tap-to-pay, but at the cost of intermediaries and settlement measured in days. The question behind Noir was whether a tap could carry the same speed while settling on a public ledger in seconds.',
+          },
+        ],
+      },
+      {
+        id: 'x402',
+        title: 'The x402 tap-to-pay flow',
+        blocks: [
+          {
+            type: 'p',
+            body: 'x402 makes payment part of the request itself: the terminal asks to be paid, and an authorized agent answers with a payment instead of asking a human. In Noir the agent is a per-device signing key, so the hardware tag becomes the identity and the phone never has to wake up.',
+          },
+          {
+            type: 'numbered',
+            items: [
+              {
+                title: 'Tap',
+                body: 'The terminal reads the NFC or RFID tag and SHA-256 hashes its UID. The raw UID never goes on-chain; only the hash identifies the device.',
+              },
+              {
+                title: 'Resolve',
+                body: (
+                  <>
+                    <C>device_registry</C> maps that hash to its owner's wallet and agent, and <C>agent_registry</C> checks
+                    the agent's policy: right asset, amount within the spending cap, not expired.
+                  </>
+                ),
+              },
+              {
+                title: 'Authorize',
+                body: (
+                  <>
+                    The agent calls <C>payment_escrow.authorize</C> against funds the owner deposited in advance. The
+                    amount is deducted and locked for the merchant at once, with a nonce to stop replays. It costs one
+                    contract call, with no per-tap transaction fee.
+                  </>
+                ),
+              },
+              {
+                title: 'Settle',
+                body: (
+                  <>
+                    Merchants call <C>claim</C> in batches, so one transaction collects every pending payment. The owner can
+                    withdraw unused escrow at any time, and revoking a device sweeps its balance back to them.
+                  </>
+                ),
+              },
+            ],
+          },
+          {
+            type: 'stats',
+            items: [
+              { value: '< 2s', label: 'Tap to authorized payment' },
+              { value: '3', label: 'Soroban contracts' },
+              { value: '0', label: 'Taps that need the phone unlocked' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'contracts',
+        title: 'Three contracts, three questions',
+        blocks: [
+          {
+            type: 'p',
+            body: 'Spending without a confirmation screen is only safe if the rules are strict and live somewhere nobody can quietly change. So the trust model is split across three contracts, each answering one question.',
+          },
+          {
+            type: 'cards',
+            cols: 1,
+            items: [
+              {
+                title: 'device_registry: who owns this tag?',
+                body: (
+                  <>
+                    Maps a device hash to a wallet and its agent. Registration requires <C>wallet.require_auth()</C>, so
+                    only the owner can link a device. Nobody can register someone else's card to their own wallet. This is
+                    the contract I wrote first, including the persistent storage layout and moving the admin key into
+                    instance storage for production.
+                  </>
+                ),
+              },
+              {
+                title: 'agent_registry: who may spend for it, and how much?',
+                body: 'Holds a constrained policy per device: which agent key, which asset, a maximum amount per payment, and an expiry. A lost sticker is a capped, time-limited risk, not an open line to the wallet.',
+              },
+              {
+                title: 'payment_escrow: where does the money actually move?',
+                body: 'Pre-funded per device and checked against the agent policy on every authorization. Later security passes closed cross-asset drains, agent hijacking, payments from revoked devices, and funding of unregistered devices. A 20-outcome live security matrix now runs against the deployed contracts.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'gallery',
+        title: 'The app',
+        blocks: [
+          {
+            type: 'gallery',
+            items: [
+              { src: '/images/noir/01-wallet.png', alt: 'Noir Wallet home screen', width: 585, height: 1266, caption: 'Wallet: balances for the main wallet and each card' },
+              { src: '/images/noir/02-link-card.png', alt: 'Linking an NFC card', width: 585, height: 1266, caption: 'Link a card: hold the tag to the phone and sign' },
+              { src: '/images/noir/03-agents.png', alt: 'Per-device agent wallets', width: 585, height: 1266, caption: 'Agents: one signing key and spending policy per device' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'my-part',
+        title: 'My part of the build',
+        blocks: [
+          {
+            type: 'p',
+            body: 'Noir is a team project. I worked mostly on the chain and the server side, plus the public face of the product.',
+          },
+          {
+            type: 'bullets',
+            items: [
+              <>
+                Built the Soroban <C>device_registry</C> contract in Rust: storage types, initialization, owner-signed
+                registration, and its test suite.
+              </>,
+              'Built the backend payment-processing service in stages: transaction building, signing and submission to Stellar, fee-channel management with automatic top-ups, rate limiting, idempotency, retries, metrics, migrations, graceful shutdown, Docker, and a CI pipeline with integration tests.',
+              'Designed database schemas indexed on device hashes so a tap resolves to its wallet quickly.',
+              'Integrated the PDAX fiat bridge so merchants can cash out to Philippine pesos.',
+              'Built the noirx402.com landing page and the pitch presentation.',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'lessons',
+        title: 'What I learned',
+        blocks: [
+          {
+            type: 'cards',
+            cols: 1,
+            items: [
+              {
+                title: 'Removing friction means adding rules',
+                body: 'Taking the confirmation screen away does not remove the decision; it moves it. Every check a user would make by eye (is this my card, is this amount sane, is this still allowed) has to exist as a rule in a contract. The spending cap and expiry on each agent matter more to the product than the speed.',
+              },
+              {
+                title: 'Escrow beats per-tap transactions',
+                body: 'Submitting a full Stellar transaction on every tap would have meant a fee and a network round trip at the turnstile. Pre-funding an escrow and batching merchant claims turns the tap into a cheap authorization and leaves settlement for later, when nobody is waiting.',
+              },
+              {
+                title: 'Treat deployments as evidence',
+                body: 'Each contract redeploy creates fresh instances with new IDs, so the repo records every deployment, its WASM hash, and its init arguments. When a security fix ships, anyone can check exactly which code is live. On a public chain, being able to prove what is running counts for as much as the code itself.',
+              },
+            ],
+          },
+          {
+            type: 'note',
+            body: 'Noir Wallet is alpha software. The x402 flow, escrow settlement, and agent authorization run on Stellar Testnet; mainnet contracts are deployed, but production settlement and the PDAX fiat bridge are not yet live.',
+          },
+        ],
+      },
+    ],
+    cta: {
+      title: 'Have a process that should just happen?',
+      body: 'I build automation end to end, from smart contracts and payment flows to the backend and the site that explains it, so the people using it have less to think about.',
+      secondary: { label: 'See other work', href: '/#work' },
+    },
+  },
+
   /* --------------------------------------------------------- Word Scramble */
   {
     slug: 'word-scramble',

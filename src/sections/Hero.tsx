@@ -120,10 +120,16 @@ export function Hero() {
           animate={ready ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 1, ease: EASE_OUT, delay: 1.1 }}
         >
-          <p className="max-w-md text-lg leading-relaxed text-paper-2 md:col-span-5">
+          <div className="max-w-md md:col-span-5">
+          <p className="mb-5 flex items-baseline gap-3 font-display text-2xl leading-snug tracking-[-0.01em] md:text-3xl">
+            <span className="eyebrow shrink-0 text-accent">Vision</span>
+            <span>{profile.vision}</span>
+          </p>
+          <p className="text-lg leading-relaxed text-paper-2">
             Most designers hand you a Figma file and wish you luck. I design your brand <em>and</em> your store — then
             build it myself, so nothing gets lost between the mockup and launch day.
           </p>
+          </div>
           <div className="flex flex-wrap gap-3 md:col-span-4">
             <Magnetic>
               <a

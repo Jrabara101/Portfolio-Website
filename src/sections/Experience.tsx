@@ -43,14 +43,28 @@ export function Experience() {
                   </span>
                   <span className="flex items-center gap-4 md:col-span-6">
                     {job.logo ? (
-                      <img
-                        src={job.logo}
-                        alt=""
-                        width={44}
-                        height={44}
-                        loading="lazy"
-                        className="size-11 shrink-0 rounded-full bg-paper object-contain p-1.5"
-                      />
+                      <span className="relative shrink-0">
+                        <img
+                          src={job.logo}
+                          alt=""
+                          width={44}
+                          height={44}
+                          loading="lazy"
+                          className={`size-11 rounded-full ${
+                            job.logoFit === 'cover' ? 'object-cover ring-1 ring-line' : 'bg-paper object-contain p-1.5'
+                          }`}
+                        />
+                        {job.logoBadge && (
+                          <img
+                            src={job.logoBadge}
+                            alt=""
+                            width={20}
+                            height={20}
+                            loading="lazy"
+                            className="absolute -right-1 -bottom-1 size-5 rounded-full object-cover ring-2 ring-ink"
+                          />
+                        )}
+                      </span>
                     ) : (
                       <span aria-hidden className="flex size-11 shrink-0 items-center justify-center rounded-full bg-accent font-display text-xl text-ink">
                         {job.company.charAt(0)}

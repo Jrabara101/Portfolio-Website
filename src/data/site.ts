@@ -10,6 +10,7 @@ export const profile = {
   location: 'San Pedro City, PH',
   timeZone: 'Asia/Manila',
   portrait: { src: '/images/ok.webp', width: 800, height: 798 },
+  vision: 'Helping people with automation in many aspects.',
   intro:
     'I design and build Shopify stores and brand identities for growing brands. Most designers hand you a Figma file and wish you luck — I design your brand and your store, then build it myself on Shopify, WordPress, or Laravel, so nothing gets lost between the mockup and launch day.',
   facts: [
@@ -64,13 +65,26 @@ export const stack = [
   { name: 'JavaScript', icon: '/icons/Javascript.webp' },
   { name: 'TypeScript', icon: '/icons/typescript.webp' },
   { name: 'React.js', icon: '/icons/react.webp' },
+  { name: 'Next.js', icon: '/icons/nextjs.svg' },
   { name: 'PHP', icon: '/icons/php.webp' },
-  { name: 'Laravel', icon: '/icons/laravel.webp' },
+  { name: 'Laravel', icon: '/icons/laravel.svg' },
   { name: 'Python', icon: '/icons/python.webp' },
   { name: 'Ruby', icon: '/icons/ruby.webp' },
   { name: 'Go Rails', icon: '/icons/Go_Rails.webp' },
   { name: '.NET Framework', icon: '/icons/Net.webp' },
   { name: 'C Programming', icon: '/icons/C.webp' },
+  { name: 'Stellar / Soroban', icon: '/icons/stellar.svg' },
+  { name: 'Rust', icon: '/icons/rust.svg' },
+  { name: 'Shopify', icon: '/icons/shopify.svg' },
+  { name: 'WordPress', icon: '/icons/wordpress.svg' },
+  { name: 'Elementor', icon: '/icons/elementor.svg' },
+  { name: 'Figma', icon: '/icons/figma.svg' },
+  { name: 'Google Stitch', icon: '/icons/stitch.svg' },
+  { name: 'Antigravity', icon: '/icons/antigravity.svg' },
+  { name: 'Google Cloud', icon: '/icons/googlecloud.svg' },
+  { name: 'Cloudways', icon: '/icons/cloudways.svg' },
+  { name: 'XAMPP', icon: '/icons/xampp.svg' },
+  { name: 'FileZilla', icon: '/icons/filezilla.svg' },
 ]
 
 export type Experience = {
@@ -80,6 +94,10 @@ export type Experience = {
   end: string
   /** Omit when there's no logo file; the row falls back to a monogram. */
   logo?: string
+  /** 'cover' fills the circle edge to edge (for logos that already carry their own background). */
+  logoFit?: 'cover'
+  /** Small secondary logo shown on the corner of the main one, e.g. a program partner. */
+  logoBadge?: string
   bullets: string[]
   caseStudy?: { slug: string; label: string }
 }
@@ -102,10 +120,41 @@ export const experience: Experience[] = [
     ],
   },
   {
+    role: 'Smart Contract & Backend Developer',
+    company: 'Noir Wallet (x402 on Stellar)',
+    start: 'Jun 2026',
+    end: 'Present',
+    logo: '/images/logos/noir.webp',
+    logoFit: 'cover',
+    caseStudy: { slug: 'noir', label: 'Read the Noir Wallet case study' },
+    bullets: [
+      'Co-build Noir Wallet, a contactless tap-to-pay wallet on the x402 protocol: tap an NFC tag or wearable and the linked Stellar wallet pays in under two seconds, with no app or confirmation.',
+      'Wrote the Soroban device_registry contract in Rust, which maps hashed device UIDs to wallets with owner-signed registration. It works alongside agent_registry and payment_escrow, deployed to Stellar Testnet and Mainnet.',
+      'Built the backend payment service: transaction building and signing, fee-channel top-ups, rate limiting, idempotency, retries, metrics, Docker, and CI with integration tests.',
+      'Integrated the PDAX fiat bridge for peso cash-out, and built the noirx402.com landing page and pitch deck.',
+    ],
+  },
+  {
+    role: 'Web Development & Digital Marketing Intern',
+    company: 'GAO Tek Inc.',
+    start: 'Feb 2026',
+    end: 'Nov 2026',
+    logo: '/images/logos/gaotek.webp',
+    logoFit: 'cover',
+    bullets: [
+      'Completed a nine-month internship program, certified in both Web Development and Digital Marketing.',
+      'Built and maintained websites in WordPress, designing page layouts with the Elementor page builder.',
+      'Applied digital marketing practice to the sites I worked on, including SEO-minded page structure and content.',
+    ],
+  },
+  {
     role: 'Stellar Journey to Mastery Program',
     company: 'Rise In × Stellar',
     start: 'Jun 2026',
     end: 'Aug 2026',
+    logo: '/images/logos/stellar.webp',
+    logoFit: 'cover',
+    logoBadge: '/images/logos/risein-mark.webp',
     caseStudy: { slug: 'word-scramble', label: 'Read the Word Scramble case study' },
     bullets: [
       'Graduated from a three-month Stellar builder program covering Soroban smart contracts in Rust, the Stellar SDK, and wallet integration.',
@@ -237,6 +286,12 @@ export const credentials: { featured: Credential[]; more: Credential[] } = {
   ],
   more: [
     {
+      issuer: 'GAO Tek Inc.',
+      titles: ['Training in Web Development', 'Training in Digital Marketing', 'Certificate of Completion · Internship'],
+      year: '2026',
+      note: 'Nine-month internship program',
+    },
+    {
       issuer: 'Ground Gurus',
       titles: [
         'AI-Powered Applications with OpenAI & .NET',
@@ -345,6 +400,30 @@ export const builds: Build[] = [
     live: '/playground',
     source: 'https://github.com/Jrabara101',
     internal: true,
+  },
+  {
+    title: 'Noir Wallet',
+    summary: 'Contactless tap-to-pay on Stellar: tap an NFC card and the linked wallet pays, no app or unlock needed.',
+    description:
+      'A contactless wallet built on the x402 protocol. Tap an NFC card, RFID sticker, or wearable and the linked Stellar wallet pays in under two seconds, with no app to open and no confirmation. Three Soroban contracts handle device ownership, per-device agent spending policies, and pre-funded escrow that merchants claim in batches.',
+    category: 'fullstack',
+    tech: ['Stellar', 'Soroban', 'Rust', 'x402', 'React Native', 'TypeScript'],
+    image: '/images/noir/logo.webp',
+    imageBg: '#000000',
+    source: 'https://github.com/noirx402/noir',
+    live: 'https://noirx402.com/',
+  },
+  {
+    title: "Archon's Descent",
+    summary: 'A dark retro roguelike dungeon crawler with six classes, four biomes, and a guardian boss every five floors.',
+    description:
+      'A retro roguelike dungeon crawler drawn entirely on Canvas. Pick one of six classes and descend through four biomes, each ending in its own guardian. Runs bring procedurally varied floors, relics and talents, mutators, Boss Rush and Endless modes, and a Codex of bestiary, lore, and achievements. It plays with keyboard, gamepad, or touch controls, and ships as an Android app through Capacitor.',
+    category: 'games',
+    tech: ['React', 'Vite', 'HTML5 Canvas', 'JavaScript', 'Capacitor', 'GitHub Pages'],
+    image: '/images/archons-descent.webp',
+    imageBg: '#090d16',
+    source: 'https://github.com/Jrabara101/Archon-Descent',
+    live: 'https://jrabara101.github.io/Archon-Descent/#/',
   },
   {
     title: 'Word Scramble',

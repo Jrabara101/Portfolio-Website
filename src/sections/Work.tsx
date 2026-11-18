@@ -18,7 +18,7 @@ export function Work() {
         index="01"
         label="Selected work"
         title="Case studies, start to ship."
-        aside="A brand built from a blank page, a platform running a real business, and three experiments at the edges of what I know."
+        aside="A brand built from a blank page, a platform running a real business, a tap-to-pay wallet on Stellar, and three experiments at the edges of what I know."
       />
 
       <div ref={ref} className="relative">
