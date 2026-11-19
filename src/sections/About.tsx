@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
 import { Arrow, Marquee, Reveal, ScrollHighlight, SectionHead, Stagger } from '../components/motion'
-import { profile, services, stack } from '../data/site'
+import { bandItems, profile, stack } from '../data/site'
 
 export function ServiceBand() {
   const ref = useRef<HTMLDivElement>(null)
@@ -12,9 +12,9 @@ export function ServiceBand() {
     <div ref={ref} className="relative overflow-hidden py-16 md:py-24">
       <motion.div style={{ rotate }} className="-mx-[5vw] border-y border-line bg-accent py-5 text-ink md:py-7">
         <Marquee duration={28}>
-          {services.map((s) => (
-            <span key={s.title} className="flex items-center font-display text-4xl md:text-6xl">
-              <span className="px-8 italic">{s.title}</span>
+          {bandItems.map((item) => (
+            <span key={item} className="flex items-center font-display text-4xl md:text-6xl">
+              <span className="px-8 italic">{item}</span>
               <span aria-hidden className="text-2xl">✦</span>
             </span>
           ))}

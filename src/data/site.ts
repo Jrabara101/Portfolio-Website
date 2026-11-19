@@ -12,10 +12,10 @@ export const profile = {
   portrait: { src: '/images/ok.webp', width: 800, height: 798 },
   vision: 'Helping people with automation in many aspects.',
   intro:
-    'I design and build Shopify stores and brand identities for growing brands. Most designers hand you a Figma file and wish you luck — I design your brand and your store, then build it myself on Shopify, WordPress, or Laravel, so nothing gets lost between the mockup and launch day.',
+    'I design and build Shopify stores and brand identities for growing brands. Most designers hand you a Figma file and wish you luck — I design your brand and your store, then build it myself on Shopify, WordPress, or Laravel, so nothing gets lost between the mockup and launch day. Beyond stores, I build browser and mobile games, and automation that takes the repetitive work off your plate.',
   facts: [
     { label: 'Role', value: 'Designer + Developer' },
-    { label: 'Specialties', value: 'Brand Identity / Shopify / Landing Pages' },
+    { label: 'Specialties', value: 'Brand Identity / Shopify / Landing Pages / Game Development / Automation' },
     { label: 'Location', value: 'San Pedro City, PH' },
     { label: 'Email', value: 'jrabara101@gmail.com', href: 'mailto:jrabara101@gmail.com' },
     { label: 'Viber', value: '+63 961 790 3841' },
@@ -57,7 +57,22 @@ export const services = [
     body: 'Dashboards and web app interfaces that are easy to use — and because I also build in Laravel and React, designs that actually ship.',
     tags: ['UI/UX', 'Laravel', 'React'],
   },
+  {
+    title: 'Game Development',
+    price: 'Scoped per project',
+    body: 'Browser and mobile games built on Canvas and JavaScript — from quick arcade games to roguelikes with keyboard, gamepad, and touch controls, shipped to the web or to Android.',
+    tags: ['Canvas', 'JavaScript', 'Capacitor'],
+  },
+  {
+    title: 'Automation',
+    price: 'Scoped per project',
+    body: 'Taking repetitive work off your plate — CI/CD pipelines, automated payment and backend flows, and scripts that keep things running so you have less to think about.',
+    tags: ['CI/CD', 'Python', 'Workflows'],
+  },
 ]
+
+// Phrases scrolling in the orange marquee band.
+export const bandItems = services.map((s) => s.title)
 
 export const stack = [
   { name: 'HTML', icon: '/icons/html.webp' },
@@ -412,6 +427,42 @@ export const builds: Build[] = [
     imageBg: '#000000',
     source: 'https://github.com/noirx402/noir',
     live: 'https://noirx402.com/',
+  },
+  {
+    title: 'Takbo! Bagyo Run',
+    summary: 'A storm-preparedness runner: race from home to the evacuation center as a typhoon climbs from Signal 1 to Signal 5.',
+    description:
+      'A three-lane runner about typhoon readiness, in English and Filipino. Race through barangay streets, esteros, and rice fields while dodging wind, floods, and lightning. Along the way you pack your Go-Bag and answer quiz gates by running into the lane with the right answer. Every match is a fixed course on a shared daily seed, so everyone faces the same storm, and the server verifies replays to keep the leaderboard honest.',
+    category: 'games',
+    tech: ['React', 'TypeScript', 'Vite', 'Fastify', 'WebSockets', 'Tailwind CSS'],
+    image: '/images/bagyo-run.png',
+    imageBg: '#2b2142',
+    source: 'https://github.com/Jrabara101/Bagyo-Run-',
+    live: 'https://bagyo-run.vercel.app',
+  },
+  {
+    title: 'Sector 7: Containment Breach',
+    summary: 'A retro 3D first-person shooter in the browser: a facility visit turns into a fight for survival.',
+    description:
+      'A retro-inspired first-person shooter that runs entirely in the browser. You arrive by train at a locked-down research facility, and a scripted arrival and lobby sequence ends in a containment breach. Fight with a wrench and a pistol against enemy AI that goes from idle to alert to chase and attack. Physics, procedural textures, and a custom sound engine are all built in, and you can save at the in-game console.',
+    category: 'games',
+    tech: ['React', 'TypeScript', 'Three.js', 'cannon-es', 'Vite', 'Tailwind CSS'],
+    image: '/images/7-containment.png',
+    imageBg: '#1a1a1a',
+    source: 'https://github.com/Jrabara101/7-Containment',
+    live: 'https://7-containment.vercel.app',
+  },
+  {
+    title: 'Terra Vox',
+    summary: 'A 3D voxel sandbox with procedural biomes, AI villagers, and houses and villages that generate themselves.',
+    description:
+      'A living voxel world and village builder in 3D. Explore procedurally generated biomes, build with a physics-based structural stability system, and watch AI-driven NPCs and wildlife move through the world. It generates houses and whole villages procedurally, and it can export what you build as Unity C# architecture code.',
+    category: 'games',
+    tech: ['React', 'TypeScript', 'Three.js', 'Vite', 'Gemini API', 'Tailwind CSS'],
+    image: '/images/terra-vox.png',
+    imageBg: '#1b2a4a',
+    source: 'https://github.com/Jrabara101/Terra-Vox',
+    live: 'https://terra-vox-zeta.vercel.app',
   },
   {
     title: "Archon's Descent",
